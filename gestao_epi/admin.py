@@ -1,3 +1,26 @@
 from django.contrib import admin
+from .models import Colaborador
 
-# Register your models here.
+
+@admin.register(Colaborador)
+class ColaboradorAdmin(admin.ModelAdmin):
+    list_display = (
+        'matricula',
+        'nome',
+        'setor',
+        'cargo',
+        'status',
+    )
+
+    search_fields = (
+        'matricula',
+        'nome',
+        'cargo',
+    )
+
+    list_filter = (
+        'setor',
+        'status',
+    )
+
+    ordering = ('nome',)
