@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Protege+{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'gestao_epi/css/style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <div class="layout">
+
+        {% include 'gestao_epi/partials/barra_lateral.html' %}
+
+        <main class="main-content">
+            {% include 'gestao_epi/partials/header.html' %}
+
+            <section class="page-content">
+                {% block content %}{% endblock %}
+            </section>
+
+        </main>
+
+    </div>
+    
+</body>
+</html>
