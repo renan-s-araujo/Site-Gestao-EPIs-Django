@@ -21,7 +21,7 @@
                 <input
                     type="search"
                     name="busca"
-                    placeholder="Buscar colaborador"
+                    placeholder="Buscar por nome, matrícula ou cargo"
                     value="{{ busca|default:'' }}"
                     aria-label="Buscar colaborador"
                 >
@@ -57,6 +57,7 @@
                     <tr>
                         <th>Matrícula</th>
                         <th>Nome</th>
+                        <th>Cargo</th>
                         <th>Setor</th>
                         <th>Status</th>
                         <th class="coluna-acoes">Ações</th>
@@ -68,6 +69,7 @@
                     <tr>
                         <td>{{ colaborador.matricula }}</td>
                         <td>{{ colaborador.nome }}</td>
+                        <td>{{ colaborador.cargo }}</td>
                         <td>{{ colaborador.setor }}</td>
                         <td>
                             <span class="etiqueta-status
@@ -80,32 +82,31 @@
                             </span>
                         </td>
 
-                        <td class="acoes-colaborador">
-                        <a href="#"
-                        class="botao-acao botao-editar"
-                        title="Editar colaborador"
-                        aria-label="Editar {{ colaborador.nome }}">
-                            ✎
-                        </a>
+                        <td class="coluna-acoes">
+                            <div class="acoes-container">
+                                <!-- Botão de Editar -->
+                                <a href="#"
+                                   class="botao-acao botao-editar"
+                                   title="Editar colaborador"
+                                   aria-label="Editar {{ colaborador.nome }}">
+                                    ✎
+                                </a>
 
-                        <!-- Formulário/Botão de Excluir -->
-                        <form method="post" 
-                            action="{% url 'deletar_colaborador' colaborador.pk %}" 
-                            style="display: inline;" 
-                            onsubmit="return confirm('Tem certeza que deseja excluir o(a) colaborador(a) {{ colaborador.nome }}?');">
-                            {% csrf_token %}
-                            <button type="submit" 
-                                    class="botao-acao botao-excluir" 
-                                    title="Excluir colaborador" 
-                                    aria-label="Excluir {{ colaborador.nome }}">
-                                ▤
-                            </button>
-                        </form>
-                    </td>
+                                <!-- Botão que abre o Modal de Exclusão -->
+                                <button type="button"
+                                        class="botao-acao botao-excluir btn-abrir-modal-excluir"
+                                        data-url="{% url 'deletar_colaborador' colaborador.pk %}"
+                                        data-nome="{{ colaborador.nome }}"
+                                        title="Excluir colaborador"
+                                        aria-label="Excluir {{ colaborador.nome }}">
+                                    ▤
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="mensagem-vazia">
+                        <td colspan="6" class="mensagem-vazia">
                             Nenhum colaborador encontrado.
                         </td>
                     </tr>
@@ -154,8 +155,8 @@
             </div>
 
             <div class="grupo-campo">
-                <label for="{{ form.matricula.id_for_label }}">Matrícula<span class="obrigatorio">*</span></label>
-                {{ form.matricula }}
+                <label for="{{ form.cargo.id_for_label }}">Cargo<span class="obrigatorio">*</span></label>
+                {{ form.cargo }}
             </div>
 
             <div class="grupo-campo">
@@ -163,14 +164,42 @@
                 {{ form.setor }}
             </div>
 
-            <div class="grupo-campo">
-                <label for="{{ form.status.id_for_label }}">Status</label>
-                {{ form.status }}
-            </div>
-
             <div class="modal-rodape">
                 <button type="button" id="btn-cancelar" class="botao-cancelar">Cancelar</button>
                 <button type="submit" class="botao-salvar">Salvar</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!-- ========================================
+   MODAL DE CONFIRMAÇÃO DE EXCLUSÃO
+======================================== -->
+<div id="modal-excluir" class="modal-overlay">
+    <div class="modal-conteudo modal-confirmacao">
+        
+        <div class="modal-cabecalho-excluir">
+            <div class="modal-icone-alerta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                </svg>
+            </div>
+            <h2>EXCLUIR COLABORADOR</h2>
+        </div>
+
+        <p class="texto-confirmacao-excluir">
+            Tem certeza que deseja excluir o(a) colaborador(a) <strong id="nome-colaborador-excluir"></strong>? Esta ação não poderá ser desfeita.
+        </p>
+
+        <form id="form-deletar-colaborador" method="post" action="">
+            {% csrf_token %}
+            <div class="modal-rodape">
+                <button type="button" id="btn-cancelar-excluir" class="botao-cancelar">Cancelar</button>
+                <button type="submit" class="botao-confirmar-excluir">Sim, Excluir</button>
             </div>
         </form>
 

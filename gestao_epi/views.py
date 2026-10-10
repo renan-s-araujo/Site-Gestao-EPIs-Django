@@ -31,10 +31,12 @@ def lista_colaboradores(request):
     total_colaboradores = colaboradores.count()
 
     # Pesquisa por nome ou matrícula
+    # Pesquisa por nome, matrícula ou cargo
     if busca:
         colaboradores = colaboradores.filter(
-            Q(nome__icontains=busca) |
-            Q(matricula__icontains=busca)
+            Q(nome__icontains=busca)
+            | Q(matricula__icontains=busca)
+            | Q(cargo__icontains=busca)
         )
 
     # Filtra por setor
@@ -69,5 +71,6 @@ def lista_colaboradores(request):
 @require_POST
 def deletar_colaborador(request, pk):
     colaborador = get_object_or_404(Colaborador, pk=pk)
-    colaborador.delete()
+    colaborador.status = 'Inativo'  # Desativa em vez de apagar
+    colaborador.save()
     return redirect('lista_colaboradores')

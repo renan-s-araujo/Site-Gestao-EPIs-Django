@@ -21,7 +21,7 @@
 
 
 /* ========================================
-   2. CONFIGURAÇÕES GERAIS
+   2. CONFIGURAÇÕES GERAIS E RESET
 ======================================== */
 
 * {
@@ -45,6 +45,8 @@ select {
 
 button {
     cursor: pointer;
+    border: none;
+    background: none;
 }
 
 a {
@@ -80,7 +82,7 @@ svg {
 
 
 /* ========================================
-   4. BARRA LATERAL
+   4. BARRA LATERAL (SIDEBAR)
 ======================================== */
 
 .sidebar {
@@ -88,18 +90,14 @@ svg {
     top: 0;
     left: 0;
     z-index: 10;
-
     display: flex;
     flex-direction: column;
-
     width: var(--largura-barra-lateral);
     height: 100vh;
     padding: 28px 16px;
-
     background-color: var(--azul-escuro);
     color: var(--branco);
 }
-
 
 /* Logomarca */
 
@@ -114,13 +112,10 @@ svg {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 58px;
     height: 58px;
-
     flex-shrink: 0;
     border-radius: 15px;
-
     background-color: var(--azul-principal);
     color: var(--branco);
 }
@@ -131,9 +126,9 @@ svg {
 }
 
 .nome-marca h2 {
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 700;
-    letter-spacing: -0.7px;
+    letter-spacing: -0.5px;
 }
 
 .nome-marca h2 span {
@@ -141,44 +136,39 @@ svg {
 }
 
 .nome-marca p {
-    margin-top: 4px;
-    font-size: 11px;
-    line-height: 1.5;
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 1.4;
     color: #D7E0EB;
 }
-
 
 /* Navegação */
 
 .sidebar-nav {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-
-    margin-top: 125px;
+    gap: 16px;
+    margin-top: 60px;
 }
 
 .nav-item {
     display: flex;
     align-items: center;
-    gap: 35px;
-
-    min-height: 62px;
-    padding: 0 35px;
-
-    border-radius: 24px;
-
+    gap: 20px;
+    min-height: 52px;
+    padding: 0 24px;
+    border-radius: 16px;
     color: #F8FAFC;
     transition: background-color 0.2s ease;
 }
 
 .nav-item svg {
-    width: 31px;
-    height: 31px;
+    width: 24px;
+    height: 24px;
 }
 
 .nav-item span {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
 }
 
@@ -191,13 +181,11 @@ svg {
     color: var(--branco);
 }
 
-
 /* Rodapé da barra lateral */
 
 .sidebar-footer {
     margin-top: auto;
     padding: 20px 14px 8px;
-
     color: #C8D5E4;
     font-size: 12px;
     line-height: 1.6;
@@ -205,17 +193,15 @@ svg {
 
 
 /* ========================================
-   5. CABEÇALHO SUPERIOR
+   5. CABEÇALHO SUPERIOR (TOPBAR)
 ======================================== */
 
 .topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     height: var(--altura-cabecalho);
     padding: 0 42px;
-
     background-color: var(--branco);
     border-bottom: 1px solid #E5E7EB;
 }
@@ -230,38 +216,24 @@ svg {
     gap: 24px;
 }
 
-
-/* Botão de notificações */
-
 .icon-button {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    padding: 5px;
-
-    border: none;
-    background-color: transparent;
+    padding: 6px;
     color: var(--azul-escuro);
-}
-
-.icon-button svg {
-    width: 21px;
-    height: 21px;
+    transition: color 0.15s ease;
 }
 
 .icon-button:hover {
     color: var(--azul-principal);
 }
 
-
-/* Perfil do usuário */
-
 .perfil-usuario {
     display: flex;
     align-items: center;
     gap: 12px;
-
+    font-size: 13px;
     font-weight: 600;
 }
 
@@ -269,128 +241,33 @@ svg {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 30px;
-    height: 30px;
-
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background-color: #D7E3FA;
     color: var(--azul-escuro);
 }
 
-.avatar-usuario svg {
-    width: 25px;
-    height: 25px;
-}
-
-.chevron {
-    width: 16px;
-    height: 16px;
-}
-
 
 /* ========================================
-   6. RESPONSIVIDADE
-======================================== */
-
-@media (max-width: 900px) {
-    :root {
-        --largura-barra-lateral: 220px;
-    }
-
-    .nav-item {
-        gap: 18px;
-        padding: 0 18px;
-    }
-
-    .page-content {
-        padding: 22px 18px;
-    }
-
-    .topbar {
-        padding: 0 20px;
-    }
-}
-
-@media (max-width: 600px) {
-    :root {
-        --largura-barra-lateral: 76px;
-    }
-
-    .sidebar {
-        padding: 24px 8px;
-    }
-
-    .sidebar-logo {
-        justify-content: center;
-        padding: 0;
-    }
-
-    .logomarca {
-        width: 48px;
-        height: 48px;
-    }
-
-    .nome-marca,
-    .nav-item span,
-    .sidebar-footer {
-        display: none;
-    }
-
-    .sidebar-nav {
-        margin-top: 70px;
-        gap: 18px;
-    }
-
-    .nav-item {
-        justify-content: center;
-        padding: 0;
-        border-radius: 14px;
-    }
-
-    .nav-item svg {
-        width: 26px;
-        height: 26px;
-    }
-
-    .page-content {
-        padding: 20px 12px;
-    }
-
-    .topbar {
-        padding: 0 12px;
-    }
-
-    .topbar-actions {
-        gap: 12px;
-    }
-
-    .perfil-usuario {
-        gap: 6px;
-    }
-}
-
-/* ========================================
-   7. TELA DE COLABORADORES
+   6. TELA DE LISTAGEM DE COLABORADORES
 ======================================== */
 
 .pagina-colaboradores {
     width: 100%;
     min-width: 0;
     min-height: calc(100vh - var(--altura-cabecalho));
-    padding: 16px 34px 22px;
-    background-color: var(--fundo-pagina);
-    color: var(--texto-principal);
+    padding: 20px 34px 30px;
 }
 
-/* Cabeçalho da página */
+/* Cabeçalho */
 
 .cabecalho-colaboradores {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
 
 .cabecalho-colaboradores h1 {
@@ -398,102 +275,94 @@ svg {
     color: var(--azul-escuro);
     font-size: 20px;
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.3;
 }
 
-/* Botão incluir colaborador */
+/* Botão de Incluir Colaborador */
 
 .botao-incluir {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 9px;
-    min-height: 35px;
-    padding: 0 15px;
-    border: none;
-    border-radius: 6px;
+    gap: 8px;
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 8px;
     background-color: var(--azul-principal);
     color: var(--branco);
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 600;
-    white-space: nowrap;
-    text-decoration: none;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.15s ease;
 }
 
 .botao-incluir:hover {
     background-color: var(--azul-hover);
-    color: var(--branco);
 }
 
 .icone-mais {
-    font-size: 22px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 500;
     line-height: 1;
 }
 
-/* Cartão branco que contém os filtros e a tabela */
+/* Cartão da Tabela e Filtros */
 
 .cartao-listagem {
     width: 100%;
-    padding: 14px 28px 15px;
-    border-radius: 8px;
+    padding: 20px 24px;
+    border-radius: 12px;
     background-color: var(--branco);
-    box-sizing: border-box;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Pesquisa e filtros */
+/* Formulário de Filtros */
 
 .filtros-colaboradores {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 14px;
+    gap: 12px;
+    margin-bottom: 18px;
 }
 
 .campo-busca {
     display: flex;
     align-items: center;
     gap: 10px;
-    width: 255px;
-    height: 28px;
-    padding: 0 10px;
+    width: 280px;
+    height: 36px;
+    padding: 0 12px;
     border: 1px solid var(--borda);
-    border-radius: 7px;
+    border-radius: 8px;
     background-color: var(--branco);
-    box-sizing: border-box;
 }
 
 .campo-busca:focus-within {
     border-color: var(--azul-principal);
-    box-shadow: 0 0 0 2px rgb(37 99 235 / 10%);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
 .campo-busca input {
     width: 100%;
-    min-width: 0;
     height: 100%;
-    padding: 0;
     border: none;
     outline: none;
     background: transparent;
     color: var(--texto-principal);
-    font-family: inherit;
-    font-size: 10px;
+    font-size: 13px;
 }
 
 .campo-busca input::placeholder {
-    color: #8290a1;
+    color: #94A3B8;
 }
 
-/* Ícone de pesquisa feito em CSS */
+/* Ícone de busca CSS */
 
 .icone-busca {
     position: relative;
     display: inline-block;
-    width: 9px;
-    height: 9px;
+    width: 11px;
+    height: 11px;
     flex-shrink: 0;
     border: 1.5px solid var(--azul-escuro);
     border-radius: 50%;
@@ -503,7 +372,7 @@ svg {
     position: absolute;
     right: -4px;
     bottom: -2px;
-    width: 4px;
+    width: 5px;
     height: 1.5px;
     background-color: var(--azul-escuro);
     content: "";
@@ -512,16 +381,14 @@ svg {
 }
 
 .filtros-colaboradores select {
-    width: 134px;
-    height: 28px;
-    padding: 0 9px;
+    height: 36px;
+    padding: 0 12px;
     border: 1px solid var(--borda);
-    border-radius: 7px;
+    border-radius: 8px;
     outline: none;
     background-color: var(--branco);
     color: var(--texto-principal);
-    font-family: inherit;
-    font-size: 10px;
+    font-size: 13px;
     cursor: pointer;
 }
 
@@ -529,13 +396,11 @@ svg {
     border-color: var(--azul-principal);
 }
 
-/* Oculto por padrão: os selects enviam o formulário automaticamente */
-
 .botao-filtrar {
-    display: none;
+    display: none; /* Submissão automática no onchange */
 }
 
-/* Tabela de colaboradores */
+/* Tabela de Dados */
 
 .tabela-responsiva {
     width: 100%;
@@ -547,29 +412,29 @@ svg {
     border: 1px solid var(--borda);
     border-collapse: separate;
     border-spacing: 0;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: var(--branco);
-    color: var(--texto-principal);
-    font-size: 10px;
+    font-size: 13px;
 }
 
 .tabela-colaboradores thead {
-    background-color: #e9ebee;
+    background-color: #F8FAFC;
 }
 
 .tabela-colaboradores th {
-    height: 53px;
-    padding: 0 17px;
+    height: 48px;
+    padding: 0 16px;
     border-bottom: 1px solid var(--borda);
     text-align: left;
     font-weight: 600;
+    color: var(--texto-principal);
     white-space: nowrap;
 }
 
 .tabela-colaboradores td {
-    height: 37px;
-    padding: 5px 17px;
-    border-bottom: 1px solid #d9d9d9;
+    height: 44px;
+    padding: 8px 16px;
+    border-bottom: 1px solid #E2E8F0;
     vertical-align: middle;
 }
 
@@ -582,15 +447,12 @@ svg {
 }
 
 .tabela-colaboradores tbody tr:hover {
-    background-color: #f7f9fc;
+    background-color: #F1F5F9;
 }
 
-/* Coluna de ações */
+/* Ações */
 
-.tabela-colaboradores .coluna-acoes {
-    text-align: center;
-}
-
+.coluna-acoes,
 .acoes-colaborador {
     text-align: center;
     white-space: nowrap;
@@ -600,158 +462,72 @@ svg {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 19px;
-    height: 19px;
-    margin: 0 18px;
-    padding: 0;
+    width: 28px;
+    height: 28px;
+    margin: 0 4px;
     border-radius: 6px;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1;
-    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
     transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .botao-acao:hover {
-    transform: scale(1.08);
-    opacity: 0.8;
+    transform: scale(1.05);
+    opacity: 0.9;
 }
 
 .botao-editar {
-    background-color: #c9d9ff;
+    background-color: #DBEAFE;
     color: var(--azul-principal);
 }
 
 .botao-excluir {
-    background-color: #ffcaca;
-    color: #e52632;
+    background-color: #FEE2E2;
+    color: #DC2626;
 }
 
-/* Etiquetas de status */
+/* Etiquetas de Status */
 
 .etiqueta-status {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 61px;
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 20px;
-    box-sizing: border-box;
-    font-size: 9px;
-    line-height: 1.1;
+    font-size: 11px;
+    font-weight: 600;
 }
 
 .status-ativo {
-    background-color: #c4e8d2;
-    color: #247548;
+    background-color: #DCFCE7;
+    color: #15803D;
 }
 
 .status-inativo {
-    background-color: #fac6c7;
-    color: #b4232c;
+    background-color: #FEE2E2;
+    color: #B91C1C;
 }
 
-/* Nenhum colaborador encontrado */
-
 .mensagem-vazia {
-    height: 100px !important;
+    height: 80px !important;
     text-align: center;
     color: var(--texto-secundario);
 }
 
-/* Rodapé da tabela */
+/* Rodapé da Listagem */
 
 .rodape-listagem {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding-top: 13px;
-    color: var(--texto-principal);
-    font-size: 10px;
+    padding-top: 16px;
+    color: var(--texto-secundario);
+    font-size: 12px;
 }
+
 
 /* ========================================
-   8. RESPONSIVIDADE DA TELA
-======================================== */
-
-@media (max-width: 900px) {
-    .pagina-colaboradores {
-        padding: 20px 18px;
-    }
-
-    .cartao-listagem {
-        padding: 14px 18px;
-    }
-
-    .botao-acao {
-        margin: 0 8px;
-    }
-}
-
-@media (max-width: 600px) {
-    .pagina-colaboradores {
-        padding: 16px 12px;
-    }
-
-    .cabecalho-colaboradores {
-        align-items: flex-start;
-        flex-wrap: wrap;
-    }
-
-    .cabecalho-colaboradores h1 {
-        font-size: 18px;
-    }
-
-    .cartao-listagem {
-        padding: 12px;
-    }
-
-    .filtros-colaboradores {
-        align-items: stretch;
-    }
-
-    .campo-busca {
-        width: 100%;
-        height: 36px;
-    }
-
-    .filtros-colaboradores select {
-        flex: 1;
-        min-width: 0;
-        width: auto;
-        height: 36px;
-    }
-
-    .tabela-colaboradores {
-        min-width: 520px;
-    }
-
-    .botao-acao {
-        margin: 0 8px;
-    }
-
-    .rodape-listagem {
-        flex-wrap: wrap;
-    }
-}
-
-@media (max-width: 400px) {
-    .cabecalho-colaboradores {
-        flex-direction: column;
-    }
-
-    .botao-incluir {
-        align-self: flex-start;
-    }
-
-    .filtros-colaboradores select {
-        flex-basis: 100%;
-    }
-}
-
-/* ========================================
-   9. MODAL DE CADASTRO DE COLABORADOR
+   7. MODAIS (CADASTRO E EXCLUSÃO)
 ======================================== */
 
 .modal-overlay {
@@ -778,10 +554,10 @@ svg {
 
 .modal-conteudo {
     width: 100%;
-    max-width: 620px;
+    max-width: 540px;
     background-color: var(--branco);
     border-radius: 16px;
-    padding: 28px 32px 32px;
+    padding: 28px 32px;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     transform: translateY(-12px);
     transition: transform 0.25s ease;
@@ -791,11 +567,13 @@ svg {
     transform: translateY(0);
 }
 
+/* Modal de Cadastro */
+
 .modal-cabecalho {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .modal-titulo {
@@ -811,25 +589,15 @@ svg {
     color: var(--azul-principal);
 }
 
-.modal-icone-colaborador svg {
-    width: 28px;
-    height: 28px;
-}
-
 .modal-titulo h2 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--azul-escuro);
-    letter-spacing: 0.3px;
 }
 
 .modal-fechar {
-    background: none;
-    border: none;
-    font-size: 26px;
+    font-size: 24px;
     color: var(--texto-secundario);
-    cursor: pointer;
-    line-height: 1;
     padding: 4px;
 }
 
@@ -837,15 +605,16 @@ svg {
     color: var(--texto-principal);
 }
 
-/* Campos do formulário */
+/* Formulário do Modal */
 
 .modal-formulario .grupo-campo {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-formulario label {
-    display: block;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--texto-principal);
     margin-bottom: 6px;
@@ -857,148 +626,18 @@ svg {
 }
 
 .modal-formulario input[type="text"],
-.modal-formulario select {
+.modal-formulario select,
+.modal-formulario .form-control {
     width: 100%;
-    height: 38px;
+    height: 40px;
     padding: 0 12px;
     border: 1px solid var(--borda);
     border-radius: 8px;
     background-color: var(--branco);
-    font-size: 12px;
+    font-size: 13px;
     color: var(--texto-principal);
     outline: none;
     transition: border-color 0.15s ease;
-}
-
-.modal-formulario input[type="text"]:focus,
-.modal-formulario select:focus {
-    border-color: var(--azul-principal);
-    box-shadow: 0 0 0 2px rgb(37 99 235 / 10%);
-}
-
-.subtitulo-epis {
-    font-size: 11px;
-    color: var(--texto-secundario);
-    margin-top: -2px;
-    margin-bottom: 10px;
-}
-
-/* Card cinza dos EPIs */
-
-.card-epis {
-    background-color: #F1F5F9;
-    padding: 18px 20px;
-    border-radius: 12px;
-}
-
-.grid-epis {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px 16px;
-}
-
-.opcao-epi {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    margin-bottom: 0 !important;
-}
-
-.opcao-epi input[type="checkbox"] {
-    width: 15px;
-    height: 15px;
-    accent-color: var(--azul-principal);
-    cursor: pointer;
-}
-
-.opcao-epi span {
-    font-size: 12px;
-    color: #334155;
-    font-weight: 500;
-}
-
-/* Rodapé com botões */
-
-.modal-rodape {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 28px;
-}
-
-.botao-cancelar {
-    height: 38px;
-    padding: 0 24px;
-    background-color: #F1F5F9;
-    border: 1px solid var(--borda);
-    border-radius: 8px;
-    color: #334155;
-    font-size: 12px;
-    font-weight: 600;
-    transition: background-color 0.15s ease;
-}
-
-.botao-cancelar:hover {
-    background-color: #E2E8F0;
-}
-
-.botao-salvar {
-    height: 38px;
-    padding: 0 32px;
-    background-color: var(--azul-principal);
-    border: none;
-    border-radius: 8px;
-    color: var(--branco);
-    font-size: 12px;
-    font-weight: 600;
-    transition: background-color 0.15s ease;
-}
-
-.botao-salvar:hover {
-    background-color: var(--azul-hover);
-}
-
-@media (max-width: 600px) {
-    .grid-epis {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .modal-conteudo {
-        padding: 20px;
-    }
-}
-
-/* Garante visibilidade e tamanho correto para os campos do modal */
-.modal-formulario .grupo-campo {
-    margin-bottom: 16px;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-formulario label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--texto-principal);
-    margin-bottom: 6px;
-}
-
-/* Formatação genérica para todos os inputs e selects do modal */
-.modal-formulario input[type="text"],
-.modal-formulario select,
-.modal-formulario .form-control {
-    display: block;
-    width: 100%;
-    height: 38px;
-    padding: 0 12px;
-    border: 1px solid var(--borda);
-    border-radius: 8px;
-    background-color: var(--branco);
-    font-size: 12px;
-    color: var(--texto-principal);
-    outline: none;
-    box-sizing: border-box;
 }
 
 .modal-formulario input[type="text"]:focus,
@@ -1008,8 +647,225 @@ svg {
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
-button.botao-acao {
+.modal-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.botao-cancelar {
+    height: 40px;
+    padding: 0 20px;
+    background-color: #F1F5F9;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+}
+
+.botao-cancelar:hover {
+    background-color: #E2E8F0;
+}
+
+.botao-salvar {
+    height: 40px;
+    padding: 0 28px;
+    background-color: var(--azul-principal);
+    border-radius: 8px;
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+}
+
+.botao-salvar:hover {
+    background-color: var(--azul-hover);
+}
+
+/* Modal de Confirmação de Exclusão */
+
+.modal-confirmacao {
+    max-width: 460px;
+    padding: 24px 28px;
+}
+
+.modal-cabecalho-excluir {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.modal-icone-alerta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #FEE2E2;
+    color: #DC2626;
+}
+
+.modal-icone-alerta svg {
+    width: 22px;
+    height: 22px;
+}
+
+.modal-cabecalho-excluir h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--azul-escuro);
+}
+
+.texto-confirmacao-excluir {
+    font-size: 13px;
+    color: var(--texto-secundario);
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.texto-confirmacao-excluir strong {
+    color: var(--texto-principal);
+    font-weight: 600;
+}
+
+.botao-confirmar-excluir {
+    height: 40px;
+    padding: 0 24px;
+    background-color: #DC2626;
+    border-radius: 8px;
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+}
+
+.botao-confirmar-excluir:hover {
+    background-color: #B91C1C;
+}
+
+
+/* ========================================
+   8. RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 900px) {
+    :root {
+        --largura-barra-lateral: 220px;
+    }
+
+    .pagina-colaboradores {
+        padding: 20px 18px;
+    }
+
+    .cartao-listagem {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --largura-barra-lateral: 76px;
+    }
+
+    .sidebar {
+        padding: 24px 8px;
+    }
+
+    .sidebar-logo {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .nome-marca,
+    .nav-item span,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .nav-item {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .pagina-colaboradores {
+        padding: 16px 12px;
+    }
+
+    .cabecalho-colaboradores {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filtros-colaboradores {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .campo-busca {
+        width: 100%;
+    }
+
+    .modal-conteudo {
+        padding: 20px;
+    }
+}
+
+/* Centralização e Alinhamento da Coluna de Ações */
+
+.coluna-acoes {
+    text-align: center;
+    width: 100px; /* Largura fixa ideal para a coluna de ações */
+}
+
+.acoes-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espaçamento uniforme entre editar e excluir */
+}
+
+.form-excluir-inline {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.botao-acao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
     border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
     cursor: pointer;
-    font-family: inherit;
+    text-decoration: none;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.botao-acao:hover {
+    transform: scale(1.08);
+    opacity: 0.9;
+}
+
+.botao-editar {
+    background-color: #DBEAFE;
+    color: var(--azul-principal);
+}
+
+.botao-excluir {
+    background-color: #FEE2E2;
+    color: #DC2626;
 }
