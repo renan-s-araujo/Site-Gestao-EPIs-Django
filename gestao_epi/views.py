@@ -74,3 +74,19 @@ def deletar_colaborador(request, pk):
     colaborador.status = 'Inativo'  # Desativa em vez de apagar
     colaborador.save()
     return redirect('lista_colaboradores')
+
+def editar_colaborador(request, pk):
+    colaborador = get_object_or_404(Colaborador, pk=pk)
+
+    if request.method == 'POST':
+        form = ColaboradorForm(request.POST, instance=colaborador)
+        if form.is_valid():
+            colaborador_salvo = form.save(commit=False)
+            # Garantia no backend: preserva status e matricula originais imutáveis
+            colaborador_salvo.matricula = colaborador.matricula
+            colaborador_salvo.status = colaborador.status
+            colaborador_salvo.save()
+            return redirect('lista_colaboradores')
+
+    # Caso dê algum problema ou se for chamado diretamente, recarrega a lista
+    return redirect('lista_colaboradores')

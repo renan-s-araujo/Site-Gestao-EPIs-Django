@@ -137,7 +137,7 @@ svg {
 
 .nome-marca p {
     margin-top: 2px;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.4;
     color: #D7E0EB;
 }
@@ -250,7 +250,7 @@ svg {
 
 
 /* ========================================
-   6. TELA DE LISTAGEM DE COLABORADORES
+   6. TELA DE COLABORADORES (LISTAGEM)
 ======================================== */
 
 .pagina-colaboradores {
@@ -258,9 +258,11 @@ svg {
     min-width: 0;
     min-height: calc(100vh - var(--altura-cabecalho));
     padding: 20px 34px 30px;
+    background-color: var(--fundo-pagina);
+    color: var(--texto-principal);
 }
 
-/* Cabeçalho */
+/* Cabeçalho da página */
 
 .cabecalho-colaboradores {
     display: flex;
@@ -292,6 +294,7 @@ svg {
     color: var(--branco);
     font-size: 13px;
     font-weight: 600;
+    white-space: nowrap;
     transition: background-color 0.15s ease;
 }
 
@@ -315,7 +318,7 @@ svg {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Formulário de Filtros */
+/* Filtros */
 
 .filtros-colaboradores {
     display: flex;
@@ -356,8 +359,6 @@ svg {
     color: #94A3B8;
 }
 
-/* Ícone de busca CSS */
-
 .icone-busca {
     position: relative;
     display: inline-block;
@@ -397,10 +398,10 @@ svg {
 }
 
 .botao-filtrar {
-    display: none; /* Submissão automática no onchange */
+    display: none;
 }
 
-/* Tabela de Dados */
+/* Tabela de Colaboradores */
 
 .tabela-responsiva {
     width: 100%;
@@ -450,12 +451,25 @@ svg {
     background-color: #F1F5F9;
 }
 
-/* Ações */
+/* Alinhamento dos Botões de Ações */
 
-.coluna-acoes,
-.acoes-colaborador {
+.coluna-acoes {
     text-align: center;
-    white-space: nowrap;
+    width: 110px;
+}
+
+.acoes-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.form-excluir-inline {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 .botao-acao {
@@ -464,15 +478,20 @@ svg {
     justify-content: center;
     width: 28px;
     height: 28px;
-    margin: 0 4px;
+    margin: 0;
+    padding: 0;
+    border: none;
     border-radius: 6px;
     font-size: 14px;
     font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
     transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .botao-acao:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
     opacity: 0.9;
 }
 
@@ -514,7 +533,7 @@ svg {
     color: var(--texto-secundario);
 }
 
-/* Rodapé da Listagem */
+/* Rodapé da Tabela */
 
 .rodape-listagem {
     display: flex;
@@ -527,7 +546,7 @@ svg {
 
 
 /* ========================================
-   7. MODAIS (CADASTRO E EXCLUSÃO)
+   7. MODAIS (CADASTRO, EDIÇÃO E EXCLUSÃO)
 ======================================== */
 
 .modal-overlay {
@@ -537,7 +556,7 @@ svg {
     width: 100vw;
     height: 100vh;
     background-color: rgba(15, 23, 42, 0.45);
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     z-index: 1000;
@@ -547,9 +566,12 @@ svg {
     padding: 16px;
 }
 
+/* Classe ativada pelo JS para exibir o modal */
+
 .modal-overlay.ativo {
-    opacity: 1;
-    visibility: visible;
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .modal-conteudo {
@@ -567,7 +589,7 @@ svg {
     transform: translateY(0);
 }
 
-/* Modal de Cadastro */
+/* Cabeçalho do Modal */
 
 .modal-cabecalho {
     display: flex;
@@ -589,6 +611,11 @@ svg {
     color: var(--azul-principal);
 }
 
+.modal-icone-colaborador svg {
+    width: 28px;
+    height: 28px;
+}
+
 .modal-titulo h2 {
     font-size: 16px;
     font-weight: 700;
@@ -596,9 +623,13 @@ svg {
 }
 
 .modal-fechar {
+    background: none;
+    border: none;
     font-size: 24px;
     color: var(--texto-secundario);
     padding: 4px;
+    cursor: pointer;
+    line-height: 1;
 }
 
 .modal-fechar:hover {
@@ -647,6 +678,8 @@ svg {
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
+/* Botões do Rodapé do Modal */
+
 .modal-rodape {
     display: flex;
     align-items: center;
@@ -686,7 +719,7 @@ svg {
     background-color: var(--azul-hover);
 }
 
-/* Modal de Confirmação de Exclusão */
+/* Modal de Exclusão */
 
 .modal-confirmacao {
     max-width: 460px;
@@ -814,58 +847,4 @@ svg {
     .modal-conteudo {
         padding: 20px;
     }
-}
-
-/* Centralização e Alinhamento da Coluna de Ações */
-
-.coluna-acoes {
-    text-align: center;
-    width: 100px; /* Largura fixa ideal para a coluna de ações */
-}
-
-.acoes-container {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px; /* Espaçamento uniforme entre editar e excluir */
-}
-
-.form-excluir-inline {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-}
-
-.botao-acao {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    margin: 0;
-    padding: 0;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1;
-    cursor: pointer;
-    text-decoration: none;
-    transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-.botao-acao:hover {
-    transform: scale(1.08);
-    opacity: 0.9;
-}
-
-.botao-editar {
-    background-color: #DBEAFE;
-    color: var(--azul-principal);
-}
-
-.botao-excluir {
-    background-color: #FEE2E2;
-    color: #DC2626;
 }

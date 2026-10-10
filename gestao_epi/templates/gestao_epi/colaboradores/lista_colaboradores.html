@@ -84,15 +84,21 @@
 
                         <td class="coluna-acoes">
                             <div class="acoes-container">
-                                <!-- Botão de Editar -->
-                                <a href="#"
-                                   class="botao-acao botao-editar"
-                                   title="Editar colaborador"
-                                   aria-label="Editar {{ colaborador.nome }}">
+                                <!-- Botão de Editar (Corrigido com classe e data-attributes) -->
+                                <button type="button"
+                                        class="botao-acao botao-editar btn-abrir-modal-editar"
+                                        data-url="{% url 'editar_colaborador' colaborador.pk %}"
+                                        data-matricula="{{ colaborador.matricula }}"
+                                        data-nome="{{ colaborador.nome }}"
+                                        data-cargo="{{ colaborador.cargo }}"
+                                        data-setor="{{ colaborador.setor }}"
+                                        data-status="{{ colaborador.status }}"
+                                        title="Editar colaborador"
+                                        aria-label="Editar {{ colaborador.nome }}">
                                     ✎
-                                </a>
+                                </button>
 
-                                <!-- Botão que abre o Modal de Exclusão -->
+                                <!-- Botão de Excluir -->
                                 <button type="button"
                                         class="botao-acao botao-excluir btn-abrir-modal-excluir"
                                         data-url="{% url 'deletar_colaborador' colaborador.pk %}"
@@ -200,6 +206,62 @@
             <div class="modal-rodape">
                 <button type="button" id="btn-cancelar-excluir" class="botao-cancelar">Cancelar</button>
                 <button type="submit" class="botao-confirmar-excluir">Sim, Excluir</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!-- ========================================
+   MODAL DE EDIÇÃO DE COLABORADOR
+======================================== -->
+<div id="modal-editar" class="modal-overlay">
+    <div class="modal-conteudo">
+        
+        <div class="modal-cabecalho">
+            <div class="modal-titulo">
+                <h2>EDITAR COLABORADOR</h2>
+            </div>
+            <button type="button" class="modal-fechar" id="btn-fechar-x-editar" aria-label="Fechar modal">&times;</button>
+        </div>
+
+        <form id="form-editar-colaborador" method="post" action="" class="modal-formulario">
+            {% csrf_token %}
+
+            <!-- Campos Somente Leitura (Proteção Visual) -->
+            <div class="grupo-campo">
+                <label>Matrícula (Imutável)</label>
+                <input type="text" id="editar-matricula" disabled class="form-control" style="background-color: #E2E8F0; cursor: not-allowed;">
+            </div>
+
+            <div class="grupo-campo">
+                <label>Status (Imutável)</label>
+                <input type="text" id="editar-status" disabled class="form-control" style="background-color: #E2E8F0; cursor: not-allowed;">
+            </div>
+
+            <!-- Campos Editáveis -->
+            <div class="grupo-campo">
+                <label for="editar-nome">Nome do Colaborador<span class="obrigatorio">*</span></label>
+                <input type="text" name="nome" id="editar-nome" required class="form-control">
+            </div>
+
+            <div class="grupo-campo">
+                <label for="editar-cargo">Cargo<span class="obrigatorio">*</span></label>
+                <input type="text" name="cargo" id="editar-cargo" required class="form-control">
+            </div>
+
+            <div class="grupo-campo">
+                <label for="editar-setor">Setor<span class="obrigatorio">*</span></label>
+                <select name="setor" id="editar-setor" required class="form-control">
+                    {% for valor, rotulo in setores %}
+                        <option value="{{ valor }}">{{ rotulo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="modal-rodape">
+                <button type="button" id="btn-cancelar-editar" class="botao-cancelar">Cancelar</button>
+                <button type="submit" class="botao-salvar">Salvar Alterações</button>
             </div>
         </form>
 
