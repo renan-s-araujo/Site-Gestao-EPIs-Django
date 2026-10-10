@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Colaborador(models.Model):
     SETORES = [
         ('Manutenção', 'Manutenção'),
@@ -18,7 +17,6 @@ class Colaborador(models.Model):
     nome = models.CharField(max_length=150)
     matricula = models.CharField(max_length=20, unique=True)
     setor = models.CharField(max_length=50, choices=SETORES)
-    cargo = models.CharField(max_length=100)
     status = models.CharField(
         max_length=10,
         choices=STATUS,
@@ -34,4 +32,3 @@ class Colaborador(models.Model):
         ordering = ['nome']
         verbose_name = 'Colaborador'
         verbose_name_plural = 'Colaboradores'
-

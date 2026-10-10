@@ -1,0 +1,179 @@
+{% extends 'gestao_epi/base.html' %}
+
+{% block content %}
+<div class="pagina-colaboradores">
+
+    <div class="cabecalho-colaboradores">
+        <h1>COLABORADORES</h1>
+
+        <button type="button" id="btn-abrir-modal" class="botao-incluir">
+            <span class="icone-mais">+</span>
+            Incluir Colaborador
+        </button>
+    </div>
+
+    <div class="cartao-listagem">
+
+        <form method="get" class="filtros-colaboradores">
+
+            <div class="campo-busca">
+                <span class="icone-busca" aria-hidden="true"></span>
+                <input
+                    type="search"
+                    name="busca"
+                    placeholder="Buscar colaborador"
+                    value="{{ busca|default:'' }}"
+                    aria-label="Buscar colaborador"
+                >
+            </div>
+
+            <select name="setor" aria-label="Filtrar por setor" onchange="this.form.submit()">
+                <option value="">Todos os setores</option>
+                {% for valor, rotulo in setores %}
+                    <option value="{{ valor }}" {% if setor_selecionado == valor %}selected{% endif %}>
+                        {{ rotulo }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="status" aria-label="Filtrar por status" onchange="this.form.submit()">
+                <option value="">Todos os status</option>
+                <option value="Ativo" {% if status_selecionado == 'Ativo' %}selected{% endif %}>
+                    Ativo
+                </option>
+                <option value="Inativo" {% if status_selecionado == 'Inativo' %}selected{% endif %}>
+                    Inativo
+                </option>
+            </select>
+
+            <button type="submit" class="botao-filtrar">
+                Filtrar
+            </button>
+        </form>
+
+        <div class="tabela-responsiva">
+            <table class="tabela-colaboradores">
+                <thead>
+                    <tr>
+                        <th>Matrícula</th>
+                        <th>Nome</th>
+                        <th>Setor</th>
+                        <th>Status</th>
+                        <th class="coluna-acoes">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for colaborador in colaboradores %}
+                    <tr>
+                        <td>{{ colaborador.matricula }}</td>
+                        <td>{{ colaborador.nome }}</td>
+                        <td>{{ colaborador.setor }}</td>
+                        <td>
+                            <span class="etiqueta-status
+                                {% if colaborador.status == 'Ativo' %}
+                                    status-ativo
+                                {% else %}
+                                    status-inativo
+                                {% endif %}">
+                                {{ colaborador.status }}
+                            </span>
+                        </td>
+
+                        <td class="acoes-colaborador">
+                        <a href="#"
+                        class="botao-acao botao-editar"
+                        title="Editar colaborador"
+                        aria-label="Editar {{ colaborador.nome }}">
+                            ✎
+                        </a>
+
+                        <!-- Formulário/Botão de Excluir -->
+                        <form method="post" 
+                            action="{% url 'deletar_colaborador' colaborador.pk %}" 
+                            style="display: inline;" 
+                            onsubmit="return confirm('Tem certeza que deseja excluir o(a) colaborador(a) {{ colaborador.nome }}?');">
+                            {% csrf_token %}
+                            <button type="submit" 
+                                    class="botao-acao botao-excluir" 
+                                    title="Excluir colaborador" 
+                                    aria-label="Excluir {{ colaborador.nome }}">
+                                ▤
+                            </button>
+                        </form>
+                    </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="mensagem-vazia">
+                            Nenhum colaborador encontrado.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="rodape-listagem">
+            <span>
+                Mostrando {{ colaboradores|length }}
+                de {{ total_colaboradores }} colaboradores
+            </span>
+        </div>
+
+    </div>
+</div>
+
+<!-- ========================================
+   MODAL DE CADASTRO DE COLABORADOR
+======================================== -->
+<div id="modal-cadastro" class="modal-overlay">
+    <div class="modal-conteudo">
+        
+        <div class="modal-cabecalho">
+            <div class="modal-titulo">
+                <div class="modal-icone-colaborador">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="17" y1="11" x2="23" y2="11"></line>
+                    </svg>
+                </div>
+                <h2>CADASTRO DE COLABORADOR</h2>
+            </div>
+            <button type="button" class="modal-fechar" id="btn-fechar-x" aria-label="Fechar modal">&times;</button>
+        </div>
+
+        <form method="post" action="{% url 'lista_colaboradores' %}" class="modal-formulario">
+            {% csrf_token %}
+
+            <div class="grupo-campo">
+                <label for="{{ form.nome.id_for_label }}">Nome do Colaborador<span class="obrigatorio">*</span></label>
+                {{ form.nome }}
+            </div>
+
+            <div class="grupo-campo">
+                <label for="{{ form.matricula.id_for_label }}">Matrícula<span class="obrigatorio">*</span></label>
+                {{ form.matricula }}
+            </div>
+
+            <div class="grupo-campo">
+                <label for="{{ form.setor.id_for_label }}">Setor<span class="obrigatorio">*</span></label>
+                {{ form.setor }}
+            </div>
+
+            <div class="grupo-campo">
+                <label for="{{ form.status.id_for_label }}">Status</label>
+                {{ form.status }}
+            </div>
+
+            <div class="modal-rodape">
+                <button type="button" id="btn-cancelar" class="botao-cancelar">Cancelar</button>
+                <button type="submit" class="botao-salvar">Salvar</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

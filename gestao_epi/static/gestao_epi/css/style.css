@@ -369,3 +369,647 @@ svg {
         gap: 6px;
     }
 }
+
+/* ========================================
+   7. TELA DE COLABORADORES
+======================================== */
+
+.pagina-colaboradores {
+    width: 100%;
+    min-width: 0;
+    min-height: calc(100vh - var(--altura-cabecalho));
+    padding: 16px 34px 22px;
+    background-color: var(--fundo-pagina);
+    color: var(--texto-principal);
+}
+
+/* Cabeçalho da página */
+
+.cabecalho-colaboradores {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.cabecalho-colaboradores h1 {
+    margin: 0;
+    color: var(--azul-escuro);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+/* Botão incluir colaborador */
+
+.botao-incluir {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 35px;
+    padding: 0 15px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--azul-principal);
+    color: var(--branco);
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.botao-incluir:hover {
+    background-color: var(--azul-hover);
+    color: var(--branco);
+}
+
+.icone-mais {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+/* Cartão branco que contém os filtros e a tabela */
+
+.cartao-listagem {
+    width: 100%;
+    padding: 14px 28px 15px;
+    border-radius: 8px;
+    background-color: var(--branco);
+    box-sizing: border-box;
+}
+
+/* Pesquisa e filtros */
+
+.filtros-colaboradores {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.campo-busca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 255px;
+    height: 28px;
+    padding: 0 10px;
+    border: 1px solid var(--borda);
+    border-radius: 7px;
+    background-color: var(--branco);
+    box-sizing: border-box;
+}
+
+.campo-busca:focus-within {
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 0 2px rgb(37 99 235 / 10%);
+}
+
+.campo-busca input {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--texto-principal);
+    font-family: inherit;
+    font-size: 10px;
+}
+
+.campo-busca input::placeholder {
+    color: #8290a1;
+}
+
+/* Ícone de pesquisa feito em CSS */
+
+.icone-busca {
+    position: relative;
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--azul-escuro);
+    border-radius: 50%;
+}
+
+.icone-busca::after {
+    position: absolute;
+    right: -4px;
+    bottom: -2px;
+    width: 4px;
+    height: 1.5px;
+    background-color: var(--azul-escuro);
+    content: "";
+    transform: rotate(45deg);
+    transform-origin: left center;
+}
+
+.filtros-colaboradores select {
+    width: 134px;
+    height: 28px;
+    padding: 0 9px;
+    border: 1px solid var(--borda);
+    border-radius: 7px;
+    outline: none;
+    background-color: var(--branco);
+    color: var(--texto-principal);
+    font-family: inherit;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.filtros-colaboradores select:focus {
+    border-color: var(--azul-principal);
+}
+
+/* Oculto por padrão: os selects enviam o formulário automaticamente */
+
+.botao-filtrar {
+    display: none;
+}
+
+/* Tabela de colaboradores */
+
+.tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabela-colaboradores {
+    width: 100%;
+    border: 1px solid var(--borda);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 5px;
+    background-color: var(--branco);
+    color: var(--texto-principal);
+    font-size: 10px;
+}
+
+.tabela-colaboradores thead {
+    background-color: #e9ebee;
+}
+
+.tabela-colaboradores th {
+    height: 53px;
+    padding: 0 17px;
+    border-bottom: 1px solid var(--borda);
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.tabela-colaboradores td {
+    height: 37px;
+    padding: 5px 17px;
+    border-bottom: 1px solid #d9d9d9;
+    vertical-align: middle;
+}
+
+.tabela-colaboradores tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-colaboradores tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.tabela-colaboradores tbody tr:hover {
+    background-color: #f7f9fc;
+}
+
+/* Coluna de ações */
+
+.tabela-colaboradores .coluna-acoes {
+    text-align: center;
+}
+
+.acoes-colaborador {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.botao-acao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 19px;
+    height: 19px;
+    margin: 0 18px;
+    padding: 0;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.botao-acao:hover {
+    transform: scale(1.08);
+    opacity: 0.8;
+}
+
+.botao-editar {
+    background-color: #c9d9ff;
+    color: var(--azul-principal);
+}
+
+.botao-excluir {
+    background-color: #ffcaca;
+    color: #e52632;
+}
+
+/* Etiquetas de status */
+
+.etiqueta-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 61px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    font-size: 9px;
+    line-height: 1.1;
+}
+
+.status-ativo {
+    background-color: #c4e8d2;
+    color: #247548;
+}
+
+.status-inativo {
+    background-color: #fac6c7;
+    color: #b4232c;
+}
+
+/* Nenhum colaborador encontrado */
+
+.mensagem-vazia {
+    height: 100px !important;
+    text-align: center;
+    color: var(--texto-secundario);
+}
+
+/* Rodapé da tabela */
+
+.rodape-listagem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 13px;
+    color: var(--texto-principal);
+    font-size: 10px;
+}
+
+/* ========================================
+   8. RESPONSIVIDADE DA TELA
+======================================== */
+
+@media (max-width: 900px) {
+    .pagina-colaboradores {
+        padding: 20px 18px;
+    }
+
+    .cartao-listagem {
+        padding: 14px 18px;
+    }
+
+    .botao-acao {
+        margin: 0 8px;
+    }
+}
+
+@media (max-width: 600px) {
+    .pagina-colaboradores {
+        padding: 16px 12px;
+    }
+
+    .cabecalho-colaboradores {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .cabecalho-colaboradores h1 {
+        font-size: 18px;
+    }
+
+    .cartao-listagem {
+        padding: 12px;
+    }
+
+    .filtros-colaboradores {
+        align-items: stretch;
+    }
+
+    .campo-busca {
+        width: 100%;
+        height: 36px;
+    }
+
+    .filtros-colaboradores select {
+        flex: 1;
+        min-width: 0;
+        width: auto;
+        height: 36px;
+    }
+
+    .tabela-colaboradores {
+        min-width: 520px;
+    }
+
+    .botao-acao {
+        margin: 0 8px;
+    }
+
+    .rodape-listagem {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 400px) {
+    .cabecalho-colaboradores {
+        flex-direction: column;
+    }
+
+    .botao-incluir {
+        align-self: flex-start;
+    }
+
+    .filtros-colaboradores select {
+        flex-basis: 100%;
+    }
+}
+
+/* ========================================
+   9. MODAL DE CADASTRO DE COLABORADOR
+======================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    padding: 16px;
+}
+
+.modal-overlay.ativo {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-conteudo {
+    width: 100%;
+    max-width: 620px;
+    background-color: var(--branco);
+    border-radius: 16px;
+    padding: 28px 32px 32px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-12px);
+    transition: transform 0.25s ease;
+}
+
+.modal-overlay.ativo .modal-conteudo {
+    transform: translateY(0);
+}
+
+.modal-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.modal-titulo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-icone-colaborador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--azul-principal);
+}
+
+.modal-icone-colaborador svg {
+    width: 28px;
+    height: 28px;
+}
+
+.modal-titulo h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--azul-escuro);
+    letter-spacing: 0.3px;
+}
+
+.modal-fechar {
+    background: none;
+    border: none;
+    font-size: 26px;
+    color: var(--texto-secundario);
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+}
+
+.modal-fechar:hover {
+    color: var(--texto-principal);
+}
+
+/* Campos do formulário */
+
+.modal-formulario .grupo-campo {
+    margin-bottom: 20px;
+}
+
+.modal-formulario label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--texto-principal);
+    margin-bottom: 6px;
+}
+
+.obrigatorio {
+    color: #EF4444;
+    margin-left: 2px;
+}
+
+.modal-formulario input[type="text"],
+.modal-formulario select {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background-color: var(--branco);
+    font-size: 12px;
+    color: var(--texto-principal);
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.modal-formulario input[type="text"]:focus,
+.modal-formulario select:focus {
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 0 2px rgb(37 99 235 / 10%);
+}
+
+.subtitulo-epis {
+    font-size: 11px;
+    color: var(--texto-secundario);
+    margin-top: -2px;
+    margin-bottom: 10px;
+}
+
+/* Card cinza dos EPIs */
+
+.card-epis {
+    background-color: #F1F5F9;
+    padding: 18px 20px;
+    border-radius: 12px;
+}
+
+.grid-epis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px 16px;
+}
+
+.opcao-epi {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin-bottom: 0 !important;
+}
+
+.opcao-epi input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--azul-principal);
+    cursor: pointer;
+}
+
+.opcao-epi span {
+    font-size: 12px;
+    color: #334155;
+    font-weight: 500;
+}
+
+/* Rodapé com botões */
+
+.modal-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.botao-cancelar {
+    height: 38px;
+    padding: 0 24px;
+    background-color: #F1F5F9;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+}
+
+.botao-cancelar:hover {
+    background-color: #E2E8F0;
+}
+
+.botao-salvar {
+    height: 38px;
+    padding: 0 32px;
+    background-color: var(--azul-principal);
+    border: none;
+    border-radius: 8px;
+    color: var(--branco);
+    font-size: 12px;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+}
+
+.botao-salvar:hover {
+    background-color: var(--azul-hover);
+}
+
+@media (max-width: 600px) {
+    .grid-epis {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .modal-conteudo {
+        padding: 20px;
+    }
+}
+
+/* Garante visibilidade e tamanho correto para os campos do modal */
+.modal-formulario .grupo-campo {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-formulario label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--texto-principal);
+    margin-bottom: 6px;
+}
+
+/* Formatação genérica para todos os inputs e selects do modal */
+.modal-formulario input[type="text"],
+.modal-formulario select,
+.modal-formulario .form-control {
+    display: block;
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background-color: var(--branco);
+    font-size: 12px;
+    color: var(--texto-principal);
+    outline: none;
+    box-sizing: border-box;
+}
+
+.modal-formulario input[type="text"]:focus,
+.modal-formulario select:focus,
+.modal-formulario .form-control:focus {
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+button.botao-acao {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
