@@ -6,7 +6,7 @@ from .models import Colaborador
 
 
 def index(request):
-    return render(request, 'gestao_epi/base.html')
+    return render(request, 'app_colaborador/base.html')
 
 
 def lista_colaboradores(request):
@@ -64,7 +64,7 @@ def lista_colaboradores(request):
 
     return render(
         request,
-        'gestao_epi/colaboradores/lista_colaboradores.html',
+        'app_colaborador/colaboradores/lista_colaboradores.html',
         contexto
     )
 
