@@ -1,0 +1,87 @@
+{% extends 'protege_mais/base.html' %}
+{% load static %}
+{% block title %}Empréstimos | Protege+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'gestao_epi/css/emprestimos.css' %}">
+{% endblock %}
+{% block content %}
+<div class="pagina-colaboradores">
+    <div class="cabecalho-colaboradores">
+        <h1>Empréstimos</h1>
+        <button type="button" id="emp-abrir-cadastro" class="botao-incluir"><span class="icone-mais">+</span> Registrar empréstimo</button>
+    </div>
+
+    {% if messages %}{% for message in messages %}
+        <div role="alert" class="emp-alerta {% if message.tags == 'success' %}emp-alerta-sucesso{% else %}emp-alerta-erro{% endif %}">{{ message }}</div>
+    {% endfor %}{% endif %}
+
+    <div class="cartao-listagem">
+        <form method="get" class="filtros-colaboradores">
+            <div class="campo-busca"><span class="icone-busca" aria-hidden="true"></span>
+                <input type="search" name="busca" value="{{ busca|default:'' }}" placeholder="Buscar por colaborador, equipamento ou CA" aria-label="Buscar empréstimo">
+            </div>
+            <button type="submit" class="botao-incluir">Pesquisar</button>
+        </form>
+        <div class="tabela-responsiva">
+            <table class="tabela-colaboradores">
+                <thead><tr><th>Colaborador</th><th>EPI / CA</th><th>Entrega</th><th>Previsão</th><th>Status</th><th class="coluna-acoes">Ações</th></tr></thead>
+                <tbody>
+                    {% for emprestimo in emprestimos %}
+                    <tr>
+                        <td>{{ emprestimo.colaborador.nome }}</td>
+                        <td>{{ emprestimo.equipamento.nome }}<div class="emp-secundario">CA {{ emprestimo.equipamento.ca }}</div></td>
+                        <td>{{ emprestimo.data_emprestimo|date:'d/m/Y H:i' }}</td>
+                        <td>{% if emprestimo.data_prevista_devolucao %}{{ emprestimo.data_prevista_devolucao|date:'d/m/Y H:i' }}{% else %}—{% endif %}</td>
+                        <td><span class="etiqueta-status {% if emprestimo.status == 'Devolvido' %}status-ativo{% elif emprestimo.status == 'Danificado' or emprestimo.status == 'Perdido' %}status-inativo{% else %}emp-status-aberto{% endif %}">{{ emprestimo.get_status_display }}</span></td>
+                        <td class="coluna-acoes"><div class="acoes-container">
+                            <button type="button" class="botao-acao botao-editar emp-btn-editar" title="Atualizar empréstimo" aria-label="Atualizar empréstimo de {{ emprestimo.colaborador.nome }}"
+                                data-url="{% url 'atualizar_emprestimo' emprestimo.pk %}"
+                                data-colaborador="{{ emprestimo.colaborador.nome }}"
+                                data-equipamento="{{ emprestimo.equipamento.nome }}"
+                                data-status="{{ emprestimo.status }}"
+                                data-data="{% if emprestimo.data_devolucao %}{{ emprestimo.data_devolucao|date:'Y-m-d' }}T{{ emprestimo.data_devolucao|date:'H:i' }}{% endif %}"
+                                data-observacao="{{ emprestimo.observacao_devolucao }}">✎</button>
+                        </div></td>
+                    </tr>
+                    {% empty %}<tr><td colspan="6" class="mensagem-vazia">Nenhum empréstimo encontrado.</td></tr>{% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="rodape-listagem">Mostrando {{ emprestimos|length }} de {{ total_emprestimos }} empréstimos</div>
+    </div>
+</div>
+
+<div id="emp-modal-cadastro" class="modal-overlay{% if form.errors %} ativo{% endif %}">
+    <div class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="emp-titulo-cadastro">
+        <div class="modal-cabecalho"><div class="modal-titulo"><h2 id="emp-titulo-cadastro">REGISTRAR EMPRÉSTIMO</h2></div><button type="button" class="modal-fechar emp-fechar" aria-label="Fechar">&times;</button></div>
+        <form method="post" action="{% url 'cadastrar_emprestimo' %}" class="modal-formulario">
+            {% csrf_token %}
+            {% if form.non_field_errors %}<div class="emp-alerta emp-alerta-erro">{{ form.non_field_errors }}</div>{% endif %}
+            <div class="grupo-campo"><label for="{{ form.colaborador.id_for_label }}">Colaborador *</label>{{ form.colaborador }}{{ form.colaborador.errors }}</div>
+            <div class="grupo-campo"><label for="{{ form.equipamento.id_for_label }}">Equipamento *</label>{{ form.equipamento }}{{ form.equipamento.errors }}<small class="emp-ajuda">Itens inativos ou sem estoque aparecem identificados e não podem ser emprestados.</small></div>
+            <div class="grupo-campo"><label for="{{ form.status.id_for_label }}">Tipo de entrega *</label>{{ form.status }}{{ form.status.errors }}</div>
+            <div class="grupo-campo" id="emp-grupo-previsao"><label for="{{ form.data_prevista_devolucao.id_for_label }}">Previsão de devolução *</label>{{ form.data_prevista_devolucao }}{{ form.data_prevista_devolucao.errors }}</div>
+            <div class="modal-rodape"><button type="button" class="botao-cancelar emp-fechar">Cancelar</button><button type="submit" class="botao-salvar">Salvar</button></div>
+        </form>
+    </div>
+</div>
+
+<div id="emp-modal-editar" class="modal-overlay{% if form_atualizar.errors %} ativo{% endif %}">
+    <div class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="emp-titulo-editar">
+        <div class="modal-cabecalho"><div class="modal-titulo"><h2 id="emp-titulo-editar">ATUALIZAR EMPRÉSTIMO</h2></div><button type="button" class="modal-fechar emp-fechar" aria-label="Fechar">&times;</button></div>
+        <form id="emp-form-editar" method="post" class="modal-formulario" data-error-url="{{ url_atualizacao_erro|default:'' }}">
+            {% csrf_token %}
+            <div class="grupo-campo"><label for="emp-editar-colaborador">Colaborador</label><input id="emp-editar-colaborador" class="form-control" type="text" disabled></div>
+            <div class="grupo-campo"><label for="emp-editar-equipamento">Equipamento</label><input id="emp-editar-equipamento" class="form-control" type="text" disabled></div>
+            {% if form_atualizar.non_field_errors %}<div class="emp-alerta emp-alerta-erro">{{ form_atualizar.non_field_errors }}</div>{% endif %}
+            <div class="grupo-campo"><label for="emp-editar-status">Status *</label><select id="emp-editar-status" name="status" class="form-control" required>{% for valor, rotulo in form_atualizar.fields.status.choices %}<option value="{{ valor }}" {% if form_atualizar.status.value == valor %}selected{% endif %}>{{ rotulo }}</option>{% endfor %}</select>{{ form_atualizar.status.errors }}</div>
+            <div id="emp-campos-ocorrencia">
+                <div class="grupo-campo"><label for="emp-editar-data">Data de devolução ou ocorrência *</label><input id="emp-editar-data" type="datetime-local" name="data_devolucao" class="form-control" value="{{ form_atualizar.data_devolucao.value|default:'' }}">{{ form_atualizar.data_devolucao.errors }}</div>
+                <div class="grupo-campo"><label for="emp-editar-observacao">Observação</label><textarea id="emp-editar-observacao" name="observacao_devolucao" class="form-control" rows="3">{{ form_atualizar.observacao_devolucao.value|default:'' }}</textarea>{{ form_atualizar.observacao_devolucao.errors }}</div>
+            </div>
+            <div class="modal-rodape"><button type="button" class="botao-cancelar emp-fechar">Cancelar</button><button type="submit" class="botao-salvar">Salvar alterações</button></div>
+        </form>
+    </div>
+</div>
+<script src="{% static 'gestao_epi/js/emprestimos.js' %}"></script>
+{% endblock %}

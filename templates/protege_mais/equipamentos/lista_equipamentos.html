@@ -1,0 +1,99 @@
+{% extends 'protege_mais/base.html' %}
+
+{% block title %}EPIs | Protege+{% endblock %}  
+
+{% block content %}
+<div class="pagina-colaboradores">
+    <div class="cabecalho-colaboradores">
+        <h1>EPIs</h1>
+        <button type="button" id="epi-abrir-cadastro" class="botao-incluir"><span class="icone-mais">+</span> Cadastrar novo EPI</button>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div role="alert" class="epi-alerta {% if message.tags == 'success' %}epi-alerta-sucesso{% else %}epi-alerta-erro{% endif %}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="cartao-listagem">
+        <form method="get" class="filtros-colaboradores">
+            <div class="campo-busca">
+                <span class="icone-busca" aria-hidden="true"></span>
+                <input type="search" name="busca" value="{{ busca|default:'' }}" placeholder="Buscar por nome ou CA" aria-label="Buscar EPI">
+            </div>
+            <button type="submit" class="botao-incluir">Pesquisar</button>
+        </form>
+
+        <div class="tabela-responsiva">
+            <table class="tabela-colaboradores">
+                <thead><tr><th>CA</th><th>Nome</th><th>Tipo</th><th>Situação</th><th>Quantidade disponível</th><th class="coluna-acoes">Ações</th></tr></thead>
+                <tbody>
+                    {% for equipamento in equipamentos %}
+                    <tr>
+                        <td>{{ equipamento.ca }}</td>
+                        <td>{{ equipamento.nome }}</td>
+                        <td>{{ equipamento.get_tipo_display }}</td>
+                        <td><span class="etiqueta-status {% if equipamento.status == 'Ativo' %}status-ativo{% else %}status-inativo{% endif %}">{{ equipamento.get_status_display }}</span></td>
+                        <td>{{ equipamento.quantidade_disponivel }}</td>
+                        <td class="coluna-acoes"><div class="acoes-container">
+                            <button type="button" class="botao-acao botao-editar epi-btn-editar" title="Editar EPI" aria-label="Editar {{ equipamento.nome }}"
+                                data-url="{% url 'editar_equipamento' equipamento.pk %}"
+                                data-ca="{{ equipamento.ca }}" data-nome="{{ equipamento.nome }}"
+                                data-tipo="{{ equipamento.tipo }}" data-status="{{ equipamento.status }}"
+                                data-quantidade="{{ equipamento.quantidade_disponivel }}">✎</button>
+                            <button type="button" class="botao-acao botao-excluir epi-btn-excluir" title="Excluir EPI" aria-label="Excluir {{ equipamento.nome }}"
+                                data-url="{% url 'deletar_equipamento' equipamento.pk %}" data-nome="{{ equipamento.nome }}">▤</button>
+                        </div></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" class="mensagem-vazia">Nenhum equipamento encontrado.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="rodape-listagem">Mostrando {{ equipamentos|length }} de {{ total_equipamentos }} equipamentos</div>
+    </div>
+</div>
+
+<!-- Cadastro -->
+<div id="epi-modal-cadastro" class="modal-overlay{% if form.errors %} ativo{% endif %}">
+    <div class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="epi-titulo-cadastro">
+        <div class="modal-cabecalho"><div class="modal-titulo"><h2 id="epi-titulo-cadastro">CADASTRO DE EPI</h2></div><button type="button" class="modal-fechar epi-fechar" aria-label="Fechar">&times;</button></div>
+        <form method="post" action="{% url 'lista_equipamentos' %}" class="modal-formulario">
+            {% csrf_token %}
+            {% if form.non_field_errors %}<div class="epi-alerta epi-alerta-erro">{{ form.non_field_errors }}</div>{% endif %}
+            <div class="grupo-campo"><label for="{{ form.ca.id_for_label }}">CA (Certificado de Aprovação) *</label>{{ form.ca }}{{ form.ca.errors }}</div>
+            <div class="grupo-campo"><label for="{{ form.nome.id_for_label }}">Nome do EPI *</label>{{ form.nome }}{{ form.nome.errors }}</div>
+            <div class="grupo-campo"><label for="{{ form.tipo.id_for_label }}">Tipo *</label>{{ form.tipo }}{{ form.tipo.errors }}</div>
+            <div class="grupo-campo"><label for="{{ form.status.id_for_label }}">Situação *</label>{{ form.status }}{{ form.status.errors }}</div>
+            <div class="grupo-campo"><label for="{{ form.quantidade_disponivel.id_for_label }}">Quantidade disponível *</label>{{ form.quantidade_disponivel }}{{ form.quantidade_disponivel.errors }}</div>
+            <div class="modal-rodape"><button type="button" class="botao-cancelar epi-fechar">Cancelar</button><button type="submit" class="botao-salvar">Salvar</button></div>
+        </form>
+    </div>
+</div>
+
+<!-- Edição -->
+<div id="epi-modal-editar" class="modal-overlay">
+    <div class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="epi-titulo-editar">
+        <div class="modal-cabecalho"><div class="modal-titulo"><h2 id="epi-titulo-editar">EDITAR EPI</h2></div><button type="button" class="modal-fechar epi-fechar" aria-label="Fechar">&times;</button></div>
+        <form id="epi-form-editar" method="post" class="modal-formulario">
+            {% csrf_token %}
+            <div class="grupo-campo"><label for="epi-editar-ca">CA (não pode ser alterado)</label><input type="text" id="epi-editar-ca" class="form-control" disabled></div>
+            <div class="grupo-campo"><label for="epi-editar-nome">Nome do EPI *</label><input type="text" id="epi-editar-nome" name="nome" class="form-control" required></div>
+            <div class="grupo-campo"><label for="epi-editar-tipo">Tipo *</label><select id="epi-editar-tipo" name="tipo" class="form-control" required>{% for valor, rotulo in form.fields.tipo.choices %}<option value="{{ valor }}">{{ rotulo }}</option>{% endfor %}</select></div>
+            <div class="grupo-campo"><label for="epi-editar-status">Situação *</label><select id="epi-editar-status" name="status" class="form-control" required>{% for valor, rotulo in form.fields.status.choices %}<option value="{{ valor }}">{{ rotulo }}</option>{% endfor %}</select></div>
+            <div class="grupo-campo"><label for="epi-editar-quantidade">Quantidade disponível *</label><input type="number" id="epi-editar-quantidade" name="quantidade_disponivel" min="0" class="form-control" required></div>
+            <div class="modal-rodape"><button type="button" class="botao-cancelar epi-fechar">Cancelar</button><button type="submit" class="botao-salvar">Salvar alterações</button></div>
+        </form>
+    </div>
+</div>
+
+<!-- Exclusão -->
+<div id="epi-modal-excluir" class="modal-overlay">
+    <div class="modal-conteudo modal-confirmacao" role="dialog" aria-modal="true" aria-labelledby="epi-titulo-excluir">
+        <div class="modal-cabecalho-excluir"><div class="modal-icone-alerta">!</div><h2 id="epi-titulo-excluir">EXCLUIR EPI</h2></div>
+        <p class="texto-confirmacao-excluir">Tem certeza que deseja excluir <strong id="epi-nome-excluir"></strong>? Esta ação não poderá ser desfeita.</p>
+        <form id="epi-form-excluir" method="post">{% csrf_token %}<div class="modal-rodape"><button type="button" class="botao-cancelar epi-fechar">Cancelar</button><button type="submit" class="botao-confirmar-excluir">Sim, excluir</button></div></form>
+    </div>
+</div>
+{% endblock %}

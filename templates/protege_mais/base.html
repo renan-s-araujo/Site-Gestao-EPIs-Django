@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -5,18 +6,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Protege+{% endblock %}</title>
+    <link rel="icon" href="{% static 'gestao_epi/img/favicon.png' %}" type="image/png">
+
     <link rel="stylesheet" href="{% static 'gestao_epi/css/style.css' %}">
 
     {% block extra_css %}{% endblock %}
+
+    {% if request.resolver_match.url_name == 'lista_equipamentos' %}
+        <link rel="stylesheet" href="{% static 'gestao_epi/css/equipamentos.css' %}">
+    {% endif %}
 </head>
 <body>
 
     <div class="layout">
 
-        {% include 'app_colaborador/partials/barra_lateral.html' %}
+        {% include 'protege_mais/partials/barra_lateral.html' %}
 
         <main class="main-content">
-            {% include 'app_colaborador/partials/header.html' %}
+
+            {% include 'protege_mais/partials/header.html' %}
 
             <section class="page-content">
                 {% block content %}{% endblock %}
@@ -27,5 +35,10 @@
     </div>
 
     <script src="{% static 'gestao_epi/js/script.js' %}"></script>
+
+    {% if request.resolver_match.url_name == 'lista_equipamentos' %}
+        <script src="{% static 'gestao_epi/js/equipamentos.js' %}" defer></script>
+    {% endif %}
+
 </body>
 </html>
