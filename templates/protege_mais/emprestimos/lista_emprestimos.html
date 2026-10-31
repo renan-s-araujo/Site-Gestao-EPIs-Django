@@ -16,11 +16,26 @@
     {% endfor %}{% endif %}
 
     <div class="cartao-listagem">
-        <form method="get" class="filtros-colaboradores">
-            <div class="campo-busca"><span class="icone-busca" aria-hidden="true"></span>
-                <input type="search" name="busca" value="{{ busca|default:'' }}" placeholder="Buscar por colaborador, equipamento ou CA" aria-label="Buscar empréstimo">
+        <form method="get" class="filtros-colaboradores emp-filtros" aria-label="Filtros do relatório de empréstimos">
+            <div class="emp-filtro">
+                <label for="emp-filtro-colaborador">Colaborador</label>
+                <input id="emp-filtro-colaborador" class="form-control" type="search" name="colaborador" value="{{ colaborador_filtro }}" placeholder="Nome do colaborador">
+            </div>
+            <div class="emp-filtro">
+                <label for="emp-filtro-equipamento">Equipamento</label>
+                <input id="emp-filtro-equipamento" class="form-control" type="search" name="equipamento" value="{{ equipamento_filtro }}" placeholder="Nome do equipamento">
+            </div>
+            <div class="emp-filtro">
+                <label for="emp-filtro-status">Status</label>
+                <select id="emp-filtro-status" class="form-control" name="status">
+                    <option value="">Todos os status</option>
+                    {% for valor, rotulo in status_opcoes %}
+                    <option value="{{ valor }}" {% if status_filtro == valor %}selected{% endif %}>{{ rotulo }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <button type="submit" class="botao-incluir">Pesquisar</button>
+            <a href="{% url 'lista_emprestimos' %}" class="emp-limpar-filtros">Limpar filtros</a>
         </form>
         <div class="tabela-responsiva">
             <table class="tabela-colaboradores">

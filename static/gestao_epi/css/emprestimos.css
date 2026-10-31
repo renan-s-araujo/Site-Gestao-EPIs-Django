@@ -7,3 +7,8 @@
 .emp-status-aberto { background: #DBEAFE; color: #1D4ED8; }
 .modal-formulario .errorlist { color: #B91C1C; font-size: 12px; padding-left: 18px; margin-top: 5px; }
 #emp-grupo-previsao[hidden], #emp-campos-ocorrencia[hidden] { display: none !important; }
+.emp-filtros { flex-wrap: wrap; align-items: flex-end; }
+.emp-filtro { flex: 1 1 180px; min-width: 0; }
+.emp-filtro label { display: block; margin-bottom: 6px; font-size: 13px; color: #475569; }
+.emp-filtro .form-control { width: 100%; box-sizing: border-box; }
+.emp-limpar-filtros { padding: 10px 0; color: #475569; font-size: 13px; }

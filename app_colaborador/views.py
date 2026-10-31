@@ -259,12 +259,30 @@ def lista_emprestimos(request):
         'equipamento'
     ).all()
 
+    total_emprestimos = emprestimos.count()
+    colaborador = request.GET.get('colaborador', '').strip()
+    equipamento = request.GET.get('equipamento', '').strip()
+    status = request.GET.get('status', '').strip()
+
+    if colaborador:
+        emprestimos = emprestimos.filter(colaborador__nome__icontains=colaborador)
+    if equipamento:
+        emprestimos = emprestimos.filter(equipamento__nome__icontains=equipamento)
+    if status in dict(Emprestimo.STATUS):
+        emprestimos = emprestimos.filter(status=status)
+    else:
+        status = ''
+
     form = EmprestimoForm()
     form_atualizar = AtualizarEmprestimoForm()
 
     contexto = {
         'emprestimos': emprestimos,
-        'total_emprestimos': emprestimos.count(),
+        'total_emprestimos': total_emprestimos,
+        'colaborador_filtro': colaborador,
+        'equipamento_filtro': equipamento,
+        'status_filtro': status,
+        'status_opcoes': Emprestimo.STATUS,
         'form': form,
         'form_atualizar': form_atualizar,
     }
