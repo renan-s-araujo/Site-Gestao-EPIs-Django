@@ -101,3 +101,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const userMenuBtn = document.getElementById('userMenuBtn');
+    const userDropdown = document.getElementById('userDropdown');
+
+    if (userMenuBtn && userDropdown) {
+        // Alterna a visibilidade ao clicar no botão do perfil
+        userMenuBtn.addEventListener('click', function (event) {
+            event.stopPropagation(); // Evita fechar imediatamente ao clicar no botão
+            userDropdown.classList.toggle('show');
+        });
+
+        // Fecha o menu automaticamente se o usuário clicar em qualquer outro lugar da tela
+        window.addEventListener('click', function (event) {
+            if (!userDropdown.contains(event.target) && !userMenuBtn.contains(event.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+    }
+});

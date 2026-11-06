@@ -1,39 +1,69 @@
+
 <header class="topbar">
 
     <div class="topbar-spacer"></div>
 
     <div class="topbar-actions">
 
-        <button class="icon-button" type="button"
-                aria-label="Notificações">
-            <svg viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="1.8">
+        <!-- Botão de Notificações -->
+        <button class="icon-button" type="button" aria-label="Notificações">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
                 <path d="M10 21h4"/>
             </svg>
         </button>
 
-        <div class="perfil-usuario">
-            <div class="avatar-usuario">
-                <a href="{% url 'login' %}">
-                    <svg viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="1.8">
-                    <circle cx="12" cy="8" r="4"/>
-                    <path d="M4 21a8 8 0 0 1 16 0"/>
+        <!-- Container do Perfil do Usuário (Transformado em Dropdown) -->
+        <div class="perfil-usuario user-profile-container">
+            
+            <!-- Botão que ativa o menu ao ser clicado -->
+            <button class="user-avatar-btn" id="userMenuBtn" aria-label="Menu do usuário" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <div class="avatar-usuario">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <circle cx="12" cy="8" r="4"/>
+                        <path d="M4 21a8 8 0 0 1 16 0"/>
                     </svg>
-                </a>
+                </div>
+
+                <span>{{ request.user.username|default:"Usuário" }}</span>
                 
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <path d="m7 10 5 5 5-5"/>
+                </svg>
+            </button>
+
+            <!-- Menu Flutuante (Modal / Dropdown) -->
+            <div class="user-dropdown-menu" id="userDropdown">
+                <div class="dropdown-header">
+                    <p class="user-name">{{ request.user.username|default:"Usuário" }}</p>
+                    <span class="user-email">Gerenciamento Protege+</span>
+                </div>
+                <div class="dropdown-divider"></div>
+ 
+                <a href="#" class="dropdown-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    Ver Perfil
+                </a>
+
+                <!-- Opção: Logout via POST (Seguro para Django) -->
+                <form action="{% url 'logout' %}" method="post" class="dropdown-form">
+                    {% csrf_token %}
+                    <button type="submit" class="dropdown-item logout-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                            <polyline points="16 17 21 12 16 7"/>
+                            <line x1="21" y1="12" x2="9" y2="12"/>
+                        </svg>
+                        Sair
+                    </button>
+                </form>
             </div>
 
-            <span>Usuário</span>
-
-            <svg class="chevron" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor"
-                 stroke-width="2">
-                <path d="m7 10 5 5 5-5"/>
-            </svg>
         </div>
 
     </div>
-
 </header>
+
