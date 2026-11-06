@@ -11,20 +11,53 @@ from .forms import (
 )
 
 from .models import Colaborador, Equipamento, Emprestimo
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 
 # ==========================================
-# TELA INICIAL
+# TELA LOGIN E CADASTRO DE USUÁRIO
 # ==========================================
 
-def index(request):
-    return render(request, 'protege_mais/base.html')
+
+
+class LoginUsuarioView(auth_views.LoginView):
+    template_name = 'protege_mais/login/login.html'
+    redirect_authenticated_user = True
+
+def cadastro_usuario(request):
+    if request.method == 'POST':
+        formulario = UserCreationForm(request.POST)
+
+        if formulario.is_valid():
+            usuario = formulario.save()
+            usuario.email = request.POST.get('email')
+            usuario.save()
+
+            messages.success(
+                request,
+                'Usuário cadastrado com sucesso!'
+            )
+
+            return redirect('login')
+
+    else:
+        formulario = UserCreationForm()
+
+    return render(request, 'gestao_epi/cadastro.html', {
+        'formulario': formulario
+    })
 
 
 # ==========================================
 # CRUD DE COLABORADORES
 # ==========================================
+@login_required
+def index(request):
+    return render(request, 'protege_mais/base.html')
 
+@login_required
 def lista_colaboradores(request):
 
     # 1. CADASTRO DE COLABORADORES
@@ -87,7 +120,7 @@ def lista_colaboradores(request):
         contexto
     )
 
-
+@login_required
 @require_POST
 def deletar_colaborador(request, pk):
 
@@ -104,7 +137,7 @@ def deletar_colaborador(request, pk):
 
     return redirect('lista_colaboradores')
 
-
+@login_required
 def editar_colaborador(request, pk):
 
     colaborador = get_object_or_404(Colaborador, pk=pk)
@@ -143,6 +176,7 @@ def editar_colaborador(request, pk):
 # CRUD DE EQUIPAMENTOS
 # ==========================================
 
+@login_required
 def lista_equipamentos(request):
 
     # 1. CADASTRO DE EQUIPAMENTOS
@@ -196,7 +230,7 @@ def lista_equipamentos(request):
         contexto
     )
 
-
+@login_required
 @require_POST
 def editar_equipamento(request, pk):
 
@@ -228,7 +262,7 @@ def editar_equipamento(request, pk):
 
     return redirect('lista_equipamentos')
 
-
+@login_required
 @require_POST
 def deletar_equipamento(request, pk):
 
@@ -252,7 +286,7 @@ def deletar_equipamento(request, pk):
 # ========================================
 # EMPRÉSTIMOS DE EPIs
 # ========================================
-
+@login_required
 def lista_emprestimos(request):
     emprestimos = Emprestimo.objects.select_related(
         'colaborador',
@@ -293,7 +327,7 @@ def lista_emprestimos(request):
         contexto
     )
 
-
+@login_required
 @require_POST
 def cadastrar_emprestimo(request):
     form = EmprestimoForm(request.POST)
@@ -313,7 +347,7 @@ def cadastrar_emprestimo(request):
 
     return redirect('lista_emprestimos')
 
-
+@login_required
 @require_POST
 def atualizar_emprestimo(request, pk):
     emprestimo = get_object_or_404(

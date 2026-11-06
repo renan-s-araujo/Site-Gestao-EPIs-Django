@@ -1,0 +1,592 @@
+/* ========================================
+   1. IDENTIDADE VISUAL DO PROTEGE+
+======================================== */
+
+:root {
+    --azul-escuro: #193650;
+    --azul-principal: #2563EB;
+    --azul-hover: #1D4ED8;
+
+    --fundo-pagina: #EAEDF1;
+    --branco: #FFFFFF;
+
+    --texto-principal: #193650;
+    --texto-secundario: #64748B;
+
+    --borda: #D1D5DB;
+
+    --largura-barra-lateral: 292px;
+    --altura-cabecalho: 59px;
+}
+
+
+/* ========================================
+   2. CONFIGURAÇÕES GERAIS E RESET
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    color: var(--texto-principal);
+    background-color: var(--fundo-pagina);
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+/* ========================================
+        LOGIN
+======================================== */
+
+.login-body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--azul-escuro);
+}
+
+.login-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* ========================================
+   10. IMAGEM DE FUNDO
+======================================== */
+
+.login-fundo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.login-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    background:
+        /* Vinheta: escurece as bordas */
+        radial-gradient(
+            ellipse at center,
+            transparent 25%,
+            rgba(5, 15, 30, 0.45) 70%,
+            rgba(5, 15, 30, 0.85) 100%
+        ),
+
+        /* Overlay geral: escurece toda a imagem */
+        rgba(10, 25, 45, 0.70);
+}
+
+/* ========================================
+   11. APRESENTAÇÃO LATERAL
+======================================== */
+
+.login-apresentacao {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 55px 8%;
+    color: var(--branco);
+    box-sizing: border-box;
+}
+
+/* Marca */
+
+.login-marca {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.login-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    flex-shrink: 0;
+    border-radius: 17px;
+    background-color: var(--azul-principal);
+    color: var(--branco);
+}
+
+.login-logo svg {
+    width: 39px;
+    height: 39px;
+}
+
+.login-marca h1 {
+    margin: 0;
+    color: var(--branco);
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.login-marca h1 span {
+    color: #60A5FA;
+}
+
+.login-marca p {
+    margin-top: 4px;
+    color: #D7E0EB;
+    font-size: 13px;
+}
+
+/* Texto institucional */
+
+.login-texto {
+    max-width: 500px;
+    margin: 45px 0;
+}
+
+.login-texto h2 {
+    margin-bottom: 22px;
+    color: var(--branco);
+    font-size: clamp(32px, 3.5vw, 45px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.login-texto h2 span {
+    color: #60A5FA;
+}
+
+.login-descricao {
+    max-width: 420px;
+    margin-bottom: 38px;
+    color: #D7E0EB;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* Benefícios */
+
+.login-beneficios {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.beneficio-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.beneficio-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    border: 1px solid rgba(96, 165, 250, 0.4);
+    border-radius: 12px;
+    background-color: rgba(37, 99, 235, 0.25);
+    color: #93B8FF;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.beneficio-item strong {
+    color: var(--branco);
+    font-size: 15px;
+}
+
+.beneficio-item p {
+    margin-top: 5px;
+    color: #D7E0EB;
+    font-size: 12px;
+}
+
+/* Rodapé lateral */
+
+.login-rodape-esquerdo {
+    color: #C8D5E4;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.login-rodape-esquerdo span {
+    margin: 0 6px;
+    color: #60A5FA;
+}
+
+/* ========================================
+   12. ÁREA DO MODAL DE LOGIN
+======================================== */
+
+.login-area {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 30px 45px;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+/* Cartão */
+
+.login-cartao {
+    width: 100%;
+    max-width: 440px;
+    padding: 42px 38px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+}
+
+/* ========================================
+   13. MARCA DO MODAL
+======================================== */
+
+.login-cartao-marca {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 38px;
+}
+
+.login-cartao-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background-color: #E8F0FF;
+    color: var(--azul-principal);
+}
+
+.login-cartao-logo svg {
+    width: 34px;
+    height: 34px;
+}
+
+.login-cartao-marca h2 {
+    margin: 0;
+    color: var(--azul-escuro);
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.login-cartao-marca h2 span {
+    color: var(--azul-principal);
+}
+
+.login-cartao-marca p {
+    margin-top: 3px;
+    color: var(--texto-secundario);
+    font-size: 10px;
+}
+
+/* ========================================
+   14. TÍTULO
+======================================== */
+
+.login-titulo {
+    margin-bottom: 27px;
+}
+
+.login-titulo h3 {
+    margin-bottom: 8px;
+    color: var(--azul-escuro);
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.login-titulo p {
+    color: var(--texto-secundario);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* ========================================
+   15. FORMULÁRIO
+======================================== */
+
+.login-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-campo {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    height: 49px;
+    padding: 0 15px;
+    border: 1px solid var(--borda);
+    border-radius: 9px;
+    background-color: var(--branco);
+    box-sizing: border-box;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.login-campo:focus-within {
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.campo-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #647FA4;
+    font-size: 19px;
+}
+
+.login-campo input {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--texto-principal);
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.login-campo input::placeholder {
+    color: #94A3B8;
+}
+
+/* ========================================
+   16. BOTÃO ENTRAR
+======================================== */
+
+.login-botao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    height: 49px;
+    margin-top: 6px;
+    border: none;
+    border-radius: 9px;
+    background-color: var(--azul-principal);
+    color: var(--branco);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.login-botao:hover {
+    background-color: var(--azul-hover);
+    transform: translateY(-1px);
+}
+
+.login-botao span {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+
+.criar-conta-botao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    height: 49px;
+    margin-top: 6px;
+    border: none;
+    border-radius: 9px;
+    border: 1px solid var(--azul-principal);
+    background-color: var(--branco);
+    color: var(--azul-principal);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.criar-conta-botao:hover {
+    border: 1px solid var(--azul-hover);
+    color: var(--azul-hover);
+    transform: translateY(-1px);
+}
+
+.criar-conta-botao span {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+
+/* ========================================
+   17. ERRO DE AUTENTICAÇÃO
+======================================== */
+
+.login-erro {
+    margin-bottom: 18px;
+    padding: 12px;
+    border: 1px solid #FECACA;
+    border-radius: 8px;
+    background-color: #FEF2F2;
+    color: #B91C1C;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* ========================================
+   18. FRASE FINAL DO MODAL
+======================================== */
+
+.login-frase-final {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 35px;
+}
+
+.login-frase-final span {
+    flex: 1;
+    height: 1px;
+    background-color: #D9E0E9;
+}
+
+.login-frase-final p {
+    color: var(--texto-secundario);
+    font-size: 10px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* ========================================
+   19. RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 1000px) {
+
+    .login-container {
+        grid-template-columns: 1fr 0.9fr;
+    }
+
+    .login-apresentacao {
+        padding: 40px 6%;
+    }
+
+    .login-area {
+        padding: 25px;
+    }
+
+    .login-cartao {
+        padding: 35px 25px;
+    }
+
+    .login-texto h2 {
+        font-size: 34px;
+    }
+
+    .login-descricao {
+        font-size: 13px;
+    }
+
+    .beneficio-item strong {
+        font-size: 13px;
+    }
+
+}
+
+@media (max-width: 750px) {
+
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+
+    .login-apresentacao {
+        display: none;
+    }
+
+    .login-area {
+        min-height: 100vh;
+        padding: 25px 18px;
+    }
+
+    .login-cartao {
+        max-width: 440px;
+        padding: 35px 28px;
+    }
+
+}
+
+@media (max-width: 400px) {
+
+    .login-area {
+        padding: 12px;
+    }
+
+    .login-cartao {
+        padding: 30px 20px;
+    }
+
+    .login-cartao-marca h2 {
+        font-size: 26px;
+    }
+
+    .login-frase-final p {
+        font-size: 9px;
+    }
+
+}

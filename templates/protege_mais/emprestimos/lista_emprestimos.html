@@ -16,17 +16,31 @@
     {% endfor %}{% endif %}
 
     <div class="cartao-listagem">
-        <form method="get" class="filtros-colaboradores emp-filtros" aria-label="Filtros do relatório de empréstimos">
-            <div class="emp-filtro">
-                <label for="emp-filtro-colaborador">Colaborador</label>
-                <input id="emp-filtro-colaborador" class="form-control" type="search" name="colaborador" value="{{ colaborador_filtro }}" placeholder="Nome do colaborador">
+        <form method="get" class="filtros-colaboradores">
+
+            <div class="campo-busca">
+                <label for="emp-filtro-colaborador"><span class="icone-busca" aria-hidden="true"></span></label>
+                <input 
+                    id="emp-filtro-colaborador" 
+                    class="form-control" 
+                    type="search" 
+                    name="colaborador" 
+                    value="{{ colaborador_filtro }}" 
+                    placeholder="Nome do colaborador"
+                >
+            </div>
+            <div class="campo-busca">
+                <label for="emp-filtro-equipamento"><span class="icone-busca" aria-hidden="true"></span></label>
+                <input 
+                    id="emp-filtro-equipamento" 
+                    class="form-control" 
+                    type="search" 
+                    name="equipamento" 
+                    value="{{ equipamento_filtro }}" 
+                    placeholder="Nome do equipamento"
+                >
             </div>
             <div class="emp-filtro">
-                <label for="emp-filtro-equipamento">Equipamento</label>
-                <input id="emp-filtro-equipamento" class="form-control" type="search" name="equipamento" value="{{ equipamento_filtro }}" placeholder="Nome do equipamento">
-            </div>
-            <div class="emp-filtro">
-                <label for="emp-filtro-status">Status</label>
                 <select id="emp-filtro-status" class="form-control" name="status">
                     <option value="">Todos os status</option>
                     {% for valor, rotulo in status_opcoes %}
