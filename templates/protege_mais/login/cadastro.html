@@ -1,0 +1,27 @@
+{% extends 'protege_mais/login/login.html' %}
+{% block title %}Criar conta | Protege+{% endblock %}
+{% block formulario %}
+<div class="login-titulo">
+    <h3>Crie sua conta</h3>
+    <p>Preencha seus dados para acessar o Protege+.</p>
+</div>
+<form method="post" action="{% url 'cadastro_usuario' %}" class="login-formulario" novalidate>
+    {% csrf_token %}
+    {% if formulario.errors %}
+    <div class="login-erro" role="alert">
+        Confira os campos abaixo para concluir seu cadastro.
+        {{ formulario.non_field_errors }}
+    </div>
+    {% endif %}
+    {% for campo in formulario %}
+    <div class="cadastro-grupo">
+        <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+        <div class="login-campo{% if campo.errors %} campo-invalido{% endif %}">{{ campo }}</div>
+        <div id="{{ campo.name }}-ajuda" class="cadastro-ajuda">{{ campo.help_text }}</div>
+        <div id="{{ campo.name }}-erros" class="cadastro-erros">{{ campo.errors }}</div>
+    </div>
+    {% endfor %}
+    <button type="submit" class="login-botao">Criar conta <span aria-hidden="true">→</span></button>
+    <p class="cadastro-voltar">Já tem uma conta? <a href="{% url 'login' %}">Entrar</a></p>
+</form>
+{% endblock %}

@@ -1,6 +1,38 @@
 from django import forms
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from .models import Colaborador, Equipamento, Emprestimo
+
+
+class CadastroUsuarioForm(UserCreationForm):
+    email = forms.EmailField(label='E-mail', max_length=254)
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        placeholders = {
+            'username': 'DIgite seu nome de usuário',
+            'email': 'voce@empresa.com.br',
+            'password1': 'Crie uma senha segura',
+            'password2': 'Digite a senha novamente',
+        }
+        for name, field in self.fields.items():
+            field.widget.attrs.update({
+                'placeholder': placeholders[name],
+                'autocomplete': 'new-password' if name.startswith('password') else name,
+                'aria-describedby': f'{name}-ajuda {name}-erros',
+            })
+        self.fields['username'].widget.attrs['autofocus'] = True
+        self.fields['username'].label = 'Usuário'
+        self.fields['password1'].label = 'Senha'
+        self.fields['password2'].label = 'Confirmar senha'
+        self.fields['username'].help_text = 'Até 150 caracteres. Use letras, números ou @/./+/-/_.'
+        self.fields['password1'].help_text = 'Use pelo menos 8 caracteres. Evite dados pessoais, senhas comuns ou apenas números.'
+        self.fields['password2'].help_text = ''
 
 class ColaboradorForm(forms.ModelForm):
 

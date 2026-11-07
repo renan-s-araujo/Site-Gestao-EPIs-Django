@@ -8,11 +8,10 @@ from .forms import (
     EquipamentoForm,
     EmprestimoForm,
     AtualizarEmprestimoForm,
+    CadastroUsuarioForm,
 )
 
 from .models import Colaborador, Equipamento, Emprestimo
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 
@@ -27,25 +26,26 @@ class LoginUsuarioView(auth_views.LoginView):
     redirect_authenticated_user = True
 
 def cadastro_usuario(request):
+    if request.user.is_authenticated:
+        return redirect('lista_colaboradores')
+
     if request.method == 'POST':
-        formulario = UserCreationForm(request.POST)
+        formulario = CadastroUsuarioForm(request.POST)
 
         if formulario.is_valid():
-            usuario = formulario.save()
-            usuario.email = request.POST.get('email')
-            usuario.save()
+            formulario.save()
 
             messages.success(
                 request,
-                'Usuário cadastrado com sucesso!'
+                'Conta criada com sucesso! Faça login para acessar o sistema.'
             )
 
             return redirect('login')
 
     else:
-        formulario = UserCreationForm()
+        formulario = CadastroUsuarioForm()
 
-    return render(request, 'gestao_epi/cadastro.html', {
+    return render(request, 'protege_mais/login/cadastro.html', {
         'formulario': formulario
     })
 

@@ -2,6 +2,59 @@ from django.test import TestCase
 from django.urls import reverse
 
 from .models import Colaborador, Equipamento, Emprestimo
+from django.contrib.auth import get_user_model
+
+
+class CadastroUsuarioTests(TestCase):
+    def dados(self, **alteracoes):
+        dados = {'username': 'ana.teste', 'email': 'ana@example.com',
+                 'password1': 'Segura!4729az', 'password2': 'Segura!4729az'}
+        dados.update(alteracoes)
+        return dados
+
+    def test_tela_e_link_do_login(self):
+        self.assertContains(self.client.get(reverse('cadastro_usuario')), 'Crie sua conta')
+        self.assertContains(self.client.get(reverse('login')), 'href="/cadastro/"')
+
+    def test_cadastro_salva_email_e_senha_e_permite_login(self):
+        resposta = self.client.post(reverse('cadastro_usuario'), self.dados(), follow=True)
+        self.assertRedirects(resposta, reverse('login'))
+        self.assertContains(resposta, 'Conta criada com sucesso!')
+        usuario = get_user_model().objects.get(username='ana.teste')
+        self.assertEqual(usuario.email, 'ana@example.com')
+        self.assertTrue(usuario.check_password('Segura!4729az'))
+        self.assertFalse(usuario.is_staff)
+        self.assertTrue(self.client.login(username='ana.teste', password='Segura!4729az'))
+        self.assertEqual(self.client.get(reverse('lista_colaboradores')).status_code, 200)
+
+    def test_dados_invalidos_nao_criam_usuario(self):
+        for alteracoes in [{'email': 'invalido'}, {'email': ''},
+                           {'password2': 'Outra!4729az'},
+                           {'password1': '123', 'password2': '123'}]:
+            with self.subTest(alteracoes=alteracoes):
+                resposta = self.client.post(reverse('cadastro_usuario'), self.dados(**alteracoes))
+                self.assertEqual(resposta.status_code, 200)
+                self.assertTrue(resposta.context['formulario'].errors)
+                self.assertFalse(get_user_model().objects.exists())
+
+    def test_usuario_duplicado_e_rejeitado(self):
+        get_user_model().objects.create_user(username='ana.teste', password='Segura!4729az')
+        resposta = self.client.post(reverse('cadastro_usuario'), self.dados())
+        self.assertIn('username', resposta.context['formulario'].errors)
+        self.assertEqual(get_user_model().objects.count(), 1)
+
+    def test_anonimo_nao_acessa_sistema(self):
+        for nome in ['index', 'lista_colaboradores', 'lista_equipamentos', 'lista_emprestimos']:
+            resposta = self.client.get(reverse(nome))
+            self.assertEqual(resposta.status_code, 302)
+            self.assertTrue(resposta.url.startswith(reverse('login')))
+
+    def test_autenticado_nao_cadastra_nova_conta(self):
+        usuario = get_user_model().objects.create_user(username='existente')
+        self.client.force_login(usuario)
+        resposta = self.client.post(reverse('cadastro_usuario'), self.dados())
+        self.assertRedirects(resposta, reverse('lista_colaboradores'))
+        self.assertEqual(get_user_model().objects.count(), 1)
 
 
 class RelatorioEmprestimosTests(TestCase):

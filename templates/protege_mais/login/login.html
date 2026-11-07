@@ -9,7 +9,6 @@
 
     <link rel="stylesheet" href="{% static 'gestao_epi/css/style.css' %}">
 
-    <link rel="stylesheet" href="{% static 'turismo/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'gestao_epi/css/login.css' %}">
 </head>
 
@@ -58,7 +57,6 @@
                 </p>
 
 
-                </div>
             </div>
 
             <div class="login-rodape-esquerdo">
@@ -88,6 +86,7 @@
                     </div>
                 </div>
 
+                {% block formulario %}
                 <div class="login-titulo">
                     <h3>Bem-vindo(a)!</h3>
                     <p>Faça login para acessar o sistema.</p>
@@ -98,6 +97,10 @@
                         Usuário ou senha incorretos. Verifique seus dados.
                     </div>
                 {% endif %}
+
+                {% for message in messages %}
+                    <div class="login-sucesso" role="status">{{ message }}</div>
+                {% endfor %}
 
                 <form method="POST" class="login-formulario">
                     {% csrf_token %}
@@ -133,11 +136,12 @@
                         Entrar <span>→</span>
                     </button>
 
-                    <button type="submit" class="criar-conta-botao">
+                    <a href="{% url 'cadastro_usuario' %}" class="criar-conta-botao">
                         Criar Conta <span></span>
-                    </button>
+                    </a>
 
                 </form>
+                {% endblock %}
 
                 <div class="login-frase-final">
                     <span></span>
