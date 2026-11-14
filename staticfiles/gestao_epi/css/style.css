@@ -1,0 +1,963 @@
+/* ========================================
+   1. IDENTIDADE VISUAL DO PROTEGE+
+======================================== */
+
+:root {
+    --azul-escuro: #193650;
+    --azul-principal: #2563EB;
+    --azul-hover: #1D4ED8;
+
+    --fundo-pagina: #EAEDF1;
+    --branco: #FFFFFF;
+
+    --texto-principal: #193650;
+    --texto-secundario: #64748B;
+
+    --borda: #D1D5DB;
+
+    --largura-barra-lateral: 292px;
+    --altura-cabecalho: 59px;
+}
+
+
+/* ========================================
+   2. CONFIGURAÇÕES GERAIS E RESET
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    color: var(--texto-principal);
+    background-color: var(--fundo-pagina);
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+
+/* ========================================
+   3. ESTRUTURA PRINCIPAL
+======================================== */
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    margin-left: var(--largura-barra-lateral);
+}
+
+.page-content {
+    padding: 24px 34px;
+}
+
+
+/* ========================================
+   4. BARRA LATERAL (SIDEBAR)
+======================================== */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    width: var(--largura-barra-lateral);
+    height: 100vh;
+    padding: 28px 16px;
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+}
+
+/* Logomarca */
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 12px;
+}
+
+.logomarca {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    background-color: var(--azul-principal);
+    color: var(--branco);
+}
+
+.logomarca svg {
+    width: 34px;
+    height: 34px;
+}
+
+.nome-marca h2 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.nome-marca h2 span {
+    color: #93B8FF;
+}
+
+.nome-marca p {
+    margin-top: 2px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #D7E0EB;
+}
+
+/* Navegação */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 60px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-height: 52px;
+    padding: 0 24px;
+    border-radius: 16px;
+    color: #F8FAFC;
+    transition: background-color 0.2s ease;
+}
+
+.nav-item svg {
+    width: 24px;
+    height: 24px;
+}
+
+.nav-item span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.10);
+}
+
+.nav-item.active {
+    background-color: var(--azul-principal);
+    color: var(--branco);
+}
+
+/* Rodapé da barra lateral */
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 20px 14px 8px;
+    color: #C8D5E4;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* ========================================
+   5. CABEÇALHO SUPERIOR (TOPBAR)
+======================================== */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--altura-cabecalho);
+    padding: 0 42px;
+    background-color: var(--branco);
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.topbar-spacer {
+    flex: 1;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    color: var(--azul-escuro);
+    transition: color 0.15s ease;
+}
+
+.icon-button:hover {
+    color: var(--azul-principal);
+}
+
+.perfil-usuario {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.avatar-usuario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #D7E3FA;
+    color: var(--azul-escuro);
+}
+
+
+/* ========================================
+   6. TELA DE COLABORADORES (LISTAGEM)
+======================================== */
+
+.pagina-colaboradores {
+    width: 100%;
+    min-width: 0;
+    min-height: calc(100vh - var(--altura-cabecalho));
+    padding: 20px 34px 30px;
+    background-color: var(--fundo-pagina);
+    color: var(--texto-principal);
+}
+
+/* Cabeçalho da página */
+
+.cabecalho-colaboradores {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.cabecalho-colaboradores h1 {
+    margin: 0;
+    color: var(--azul-escuro);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* Botão de Incluir Colaborador */
+
+.botao-incluir {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 8px;
+    background-color: var(--azul-principal);
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+}
+
+.botao-incluir:hover {
+    background-color: var(--azul-hover);
+}
+
+.icone-mais {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+/* Cartão da Tabela e Filtros */
+
+.cartao-listagem {
+    width: 100%;
+    padding: 20px 24px;
+    border-radius: 12px;
+    background-color: var(--branco);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Filtros */
+
+.filtros-colaboradores {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.campo-busca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 280px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background-color: var(--branco);
+}
+
+.campo-busca:focus-within {
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.campo-busca input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--texto-principal);
+    font-size: 13px;
+}
+
+.campo-busca input::placeholder {
+    color: #94A3B8;
+}
+
+.icone-busca {
+    position: relative;
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--azul-escuro);
+    border-radius: 50%;
+}
+
+.icone-busca::after {
+    position: absolute;
+    right: -4px;
+    bottom: -2px;
+    width: 5px;
+    height: 1.5px;
+    background-color: var(--azul-escuro);
+    content: "";
+    transform: rotate(45deg);
+    transform-origin: left center;
+}
+
+.filtros-colaboradores select {
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    outline: none;
+    background-color: var(--branco);
+    color: var(--texto-principal);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.filtros-colaboradores select:focus {
+    border-color: var(--azul-principal);
+}
+
+.botao-filtrar {
+    display: none;
+}
+
+/* Tabela de Colaboradores */
+
+.tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabela-colaboradores {
+    width: 100%;
+    border: 1px solid var(--borda);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    background-color: var(--branco);
+    font-size: 13px;
+}
+
+.tabela-colaboradores thead {
+    background-color: #F8FAFC;
+}
+
+.tabela-colaboradores th {
+    height: 48px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--borda);
+    text-align: left;
+    font-weight: 600;
+    color: var(--texto-principal);
+    white-space: nowrap;
+}
+
+.tabela-colaboradores td {
+    height: 44px;
+    padding: 8px 16px;
+    border-bottom: 1px solid #E2E8F0;
+    vertical-align: middle;
+}
+
+.tabela-colaboradores tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-colaboradores tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.tabela-colaboradores tbody tr:hover {
+    background-color: #F1F5F9;
+}
+
+/* Alinhamento dos Botões de Ações */
+
+.coluna-acoes {
+    text-align: center;
+    width: 110px;
+}
+
+.acoes-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.form-excluir-inline {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.botao-acao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.botao-acao:hover {
+    transform: scale(1.08);
+    opacity: 0.9;
+}
+
+.botao-editar {
+    background-color: #DBEAFE;
+    color: var(--azul-principal);
+}
+
+.botao-excluir {
+    background-color: #FEE2E2;
+    color: #DC2626;
+}
+
+/* Etiquetas de Status */
+
+.etiqueta-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-ativo {
+    background-color: #DCFCE7;
+    color: #15803D;
+}
+
+.status-inativo {
+    background-color: #FEE2E2;
+    color: #B91C1C;
+}
+
+.mensagem-vazia {
+    height: 80px !important;
+    text-align: center;
+    color: var(--texto-secundario);
+}
+
+/* Rodapé da Tabela */
+
+.rodape-listagem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    color: var(--texto-secundario);
+    font-size: 12px;
+}
+
+
+/* ========================================
+   7. MODAIS (CADASTRO, EDIÇÃO E EXCLUSÃO)
+======================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    padding: 16px;
+}
+
+/* Classe ativada pelo JS para exibir o modal */
+
+.modal-overlay.ativo {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.modal-conteudo {
+    width: 100%;
+    max-width: 540px;
+    background-color: var(--branco);
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-12px);
+    transition: transform 0.25s ease;
+}
+
+.modal-overlay.ativo .modal-conteudo {
+    transform: translateY(0);
+}
+
+/* Cabeçalho do Modal */
+
+.modal-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.modal-titulo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-icone-colaborador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--azul-principal);
+}
+
+.modal-icone-colaborador svg {
+    width: 28px;
+    height: 28px;
+}
+
+.modal-titulo h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--azul-escuro);
+}
+
+.modal-fechar {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--texto-secundario);
+    padding: 4px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-fechar:hover {
+    color: var(--texto-principal);
+}
+
+/* Formulário do Modal */
+
+.modal-formulario .grupo-campo {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-formulario label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-principal);
+    margin-bottom: 6px;
+}
+
+.obrigatorio {
+    color: #EF4444;
+    margin-left: 2px;
+}
+
+.modal-formulario input[type="text"],
+.modal-formulario select,
+.modal-formulario .form-control {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background-color: var(--branco);
+    font-size: 13px;
+    color: var(--texto-principal);
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.modal-formulario input[type="text"]:focus,
+.modal-formulario select:focus,
+.modal-formulario .form-control:focus {
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* Botões do Rodapé do Modal */
+
+.modal-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.botao-cancelar {
+    height: 40px;
+    padding: 0 20px;
+    background-color: #F1F5F9;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+}
+
+.botao-cancelar:hover {
+    background-color: #E2E8F0;
+}
+
+.botao-salvar {
+    height: 40px;
+    padding: 0 28px;
+    background-color: var(--azul-principal);
+    border-radius: 8px;
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+}
+
+.botao-salvar:hover {
+    background-color: var(--azul-hover);
+}
+
+/* Modal de Exclusão */
+
+.modal-confirmacao {
+    max-width: 460px;
+    padding: 24px 28px;
+}
+
+.modal-cabecalho-excluir {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.modal-icone-alerta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #FEE2E2;
+    color: #DC2626;
+}
+
+.modal-icone-alerta svg {
+    width: 22px;
+    height: 22px;
+}
+
+.modal-cabecalho-excluir h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--azul-escuro);
+}
+
+.texto-confirmacao-excluir {
+    font-size: 13px;
+    color: var(--texto-secundario);
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.texto-confirmacao-excluir strong {
+    color: var(--texto-principal);
+    font-weight: 600;
+}
+
+.botao-confirmar-excluir {
+    height: 40px;
+    padding: 0 24px;
+    background-color: #DC2626;
+    border-radius: 8px;
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+}
+
+.botao-confirmar-excluir:hover {
+    background-color: #B91C1C;
+}
+
+
+/* ========================================
+   8. RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 900px) {
+    :root {
+        --largura-barra-lateral: 220px;
+    }
+
+    .pagina-colaboradores {
+        padding: 20px 18px;
+    }
+
+    .cartao-listagem {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --largura-barra-lateral: 76px;
+    }
+
+    .sidebar {
+        padding: 24px 8px;
+    }
+
+    .sidebar-logo {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .nome-marca,
+    .nav-item span,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .nav-item {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .pagina-colaboradores {
+        padding: 16px 12px;
+    }
+
+    .cabecalho-colaboradores {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filtros-colaboradores {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .campo-busca {
+        width: 100%;
+    }
+
+    .modal-conteudo {
+        padding: 20px;
+    }
+}
+
+/* Container principal do perfil no header */
+.perfil-usuario.user-profile-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Transforma o elemento do perfil em um botão clicável com boa aparência */
+.user-avatar-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.user-avatar-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Um leve destaque ao passar o mouse */
+}
+
+/* Menu Flutuante (Dropdown) */
+.user-dropdown-menu {
+    display: none; /* Escondido por padrão */
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px); /* Posicionado logo abaixo do header */
+    width: 220px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    z-index: 1000;
+    padding: 8px 0;
+}
+
+/* Classe ativada via JavaScript para exibir o menu */
+.user-dropdown-menu.show {
+    display: block !important; 
+}
+
+/* Cabeçalho interno do dropdown */
+.dropdown-header {
+    padding: 8px 16px;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1e293b;
+    margin: 0;
+}
+
+.user-email {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Linha divisória */
+.dropdown-divider {
+    height: 1px;
+    background-color: #e2e8f0;
+    margin: 6px 0;
+}
+
+/* Itens de link ou botões do menu */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 16px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #334155;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f5f9;
+}
+
+/* Estilo específico para o botão de Sair (Logout) em vermelho */
+.logout-item {
+    color: #dc2626; 
+}
+
+.logout-item:hover {
+    background-color: #fee2e2;
+}
+
+.dropdown-form {
+    margin: 0;
+}
+
+/* Pequeno ajuste para a seta girar suavemente se quiser (opcional) */
+.user-avatar-btn svg.chevron {
+    transition: transform 0.2s ease;
+}
+
+.perfil-usuario.user-profile-container .user-dropdown-menu.show ~ .user-avatar-btn svg.chevron {
+    transform: rotate(180deg);
+}
